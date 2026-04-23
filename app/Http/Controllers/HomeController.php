@@ -83,7 +83,7 @@ class HomeController extends Controller {
 
                         $userDependencie = $mUsuario->unidad()->pluck('sector')->first();
 
-                        return redirect('/poi/educacion/programacion');
+                        return redirect('/inicio');
                     }
                 }
 
@@ -147,7 +147,7 @@ class HomeController extends Controller {
                 if( Auth::user()->hasRole('especialista_poi') ){
                     $mUsuario = Usuario::find(Auth::id());
                     $userDependencie = $mUsuario->unidad()->pluck('sector')->first();
-                    return redirect('/poi/'. strtolower($userDependencie));
+                    return redirect('/inicio');
                 }
                 //ADMIN POI
                 if( Auth::user()->hasRole('adminpoi') ){
@@ -163,7 +163,7 @@ class HomeController extends Controller {
 
                     $userDependencie = $mUsuario->unidad()->pluck('sector')->first();
 
-                    return redirect('/poi/salud/programacion');
+                    return redirect('/inicio');
                 }
             }
            return View::make('principal', compact('esuei', 'uei'));

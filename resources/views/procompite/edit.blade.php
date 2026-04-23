@@ -94,7 +94,7 @@
                     <div class="tab-content">
                         @permission('pi-list')
                         <div role="tabpanel" class="tab-pane active" id="tecnico">
-                            {{ Form::model($data, array('method' => 'POST', 'action' => array('MantViasController@update', $data->id))) }}
+                            {{ Form::model($data, array('method' => 'POST', 'action' => array('ProcompiteController@update', $data->id))) }}
                             <br>
                             <input type=hidden id="id" name="id" value="{{ $data['id'] }}"/>
                             {{ Form::hidden('idusuario', Auth::user()->idusuario) }}

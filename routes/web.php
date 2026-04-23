@@ -262,41 +262,6 @@ Route::group(array('middleware' => 'auth'), function () {
     Route::resource('/piptotalpriori/cronograma/{idproyecto}/meta/{idmeta}/link', 'LinkController');
     Route::resource('/piptotalpriori/cronograma/{idproyecto}/meta/{idmeta}/task', 'TaskController');
 
-
-
-    //MANTENIMIENTO DE VIAS - mantvias
-    Route::get('mantvias', ['uses' => 'MantViasController@index', 'middleware' => ['permission:mantvias-list']]);
-    Route::get('mantvias/create', ['uses' =>  'MantViasController@create', 'middleware' => ['permission:mantvias-store']]);
-    Route::post('mantvias/store', ['uses' =>  'MantViasController@store', 'middleware' => ['permission:mantvias-store']]);
-    Route::post('mantvias/show', ['uses' =>  'MantViasController@show', 'middleware' => ['permission:mantvias-show']]);
-    Route::post('mantvias/update', ['uses' =>  'MantViasController@update', 'middleware' => ['permission:mantvias-update']]);
-    Route::get('mantvias/combodistrito/{id}', ['uses' =>  'MantViasController@combodistrito']);
-    Route::get('mantvias/combosubetapa/{id}', ['uses' =>  'MantViasController@combosubetapa']);
-    //>>>>State
-    Route::post('/stateSayhuiteMantVias', ['uses' =>  'MantViasController@stateSayhuite', 'middleware' => ['permission:mantvias-sayhuite-state']]);
-    //>>>>Filter
-    Route::post('/filter-data-mantvias', ['as' => 'fd-mantvias', 'uses' =>  'MantViasController@filterData', 'middleware' => ['permission:mantvias-list']]);
-    //IMAGES
-    Route::post('mantvias/images', ['uses' => 'MantViasController@getPageImageUpload']);
-    Route::any('mantvias/images/upload', ['as' => 'upload-post', 'uses' => 'MantViasController@imgUpload', 'middleware' => ['permission:mantvias-image_upload']]);
-    Route::get('mantvias/server-images/{uid}', ['as' => 'server-images', 'uses' => 'MantViasController@getServerImages', 'middleware' => ['permission:mantvias-image-list']]);
-    //MANTENIMIENTO DE RIOS - mantrios
-    Route::get('mantrios/{tipo?}/{year?}', ['uses' => 'MantRiosController@index']);
-    Route::get('mantrios/create', ['uses' =>  'MantRiosController@create']);
-    Route::post('mantrios/store', ['uses' =>  'MantRiosController@store']);
-    Route::post('mantrios/show', ['uses' =>  'MantRiosController@show']);
-    Route::post('mantrios/update', ['uses' =>  'MantRiosController@update']);
-    Route::get('mantrios/combodistrito/{id}', ['uses' =>  'MantRiosController@combodistrito']);
-    Route::get('mantrios/combosubetapa/{id}', ['uses' =>  'MantRiosController@combosubetapa']);
-    //>>>>State
-    Route::post('/stateSayhuiteMantVias', ['uses' =>  'MantRiosController@stateSayhuite']);
-    //>>>>Filter
-    Route::post('/filter-data-mantrios', ['as' => 'fd-mantrios', 'uses' =>  'MantRiosController@filterData']);
-    //IMAGES
-    Route::post('mantrios/images', ['uses' => 'MantRiosController@getPageImageUpload']);
-    Route::any('mantrios/images/upload', ['as' => 'upload-post', 'uses' => 'MantRiosController@imgUpload']);
-    Route::get('mantrios/server-images/{uid}', ['as' => 'server-images', 'uses' => 'MantRiosController@getServerImages']);
-
     //MANTENIMIENTO DE CANALES - mantcanales
     Route::get('/mantcanales', ['uses' => 'MantCanalesController@index', 'middleware' => ['permission:mantcanales-list']]);
     Route::get('/mantcanales/create', ['uses' =>  'MantCanalesController@create', 'middleware' => ['permission:mantcanales-update']]);
@@ -344,26 +309,6 @@ Route::group(array('middleware' => 'auth'), function () {
     Route::any('procompite/images/upload', ['as' => 'upload-post', 'uses' => 'ProcompiteController@imgUpload']);
     Route::get('procompite/server-images/{uid}', ['as' => 'server-images', 'uses' => 'ProcompiteController@getServerImages']);
 
-    //AULAS PREFABRICADAS DESARROLLO SOCIAL- mantaulaspre_ds
-    Route::get('mantaulaspre', ['uses' => 'AulasPrefDSController@index']);
-    Route::post('mantaulaspre/update', ['uses' =>  'AulasPrefDSController@update']);
-    //>>>>Filter
-    Route::post('/filter-data-mantaulaspre', ['as' => 'fd-mantaulaspre', 'uses' =>  'AulasPrefDSController@filterData']);
-    //IMAGES
-    Route::post('mantaulaspre/images', ['uses' => 'AulasPrefDSController@getPageImageUpload']);
-    Route::any('mantaulaspre/images/upload', ['as' => 'upload-post', 'uses' => 'AulasPrefDSController@imgUpload']);
-    Route::get('mantaulaspre/server-images/{uid}', ['as' => 'server-images', 'uses' => 'AulasPrefDSController@getServerImages']);
-
-    //AULAS PREFABRICADAS - mantaulaspre
-    Route::get('aulasprefabricadas', ['uses' => 'AulasPrefabricadasController@index']);
-    Route::post('aulasprefabricadas/update', ['uses' =>  'AulasPrefabricadasController@update']);
-    //>>>>Filter
-    Route::post('/filter-data-aulasprefabricadas', ['uses' =>  'AulasPrefabricadasController@filterData']);
-    //IMAGES
-    Route::post('aulasprefabricadas/images', ['uses' => 'AulasPrefabricadasController@getPageImageUpload']);
-    Route::any('aulasprefabricadas/images/upload', ['as' => 'upload-post', 'uses' => 'AulasPrefabricadasController@imgUpload']);
-    Route::get('aulasprefabricadas/server-images/{uid}', ['as' => 'server-images', 'uses' => 'AulasPrefabricadasController@getServerImages']);
-
     //EXPORT
     Route::get('/exportar', ['as' => 'rptExportar', 'uses' => 'ExportController@index']);
     Route::get('/exportar/{tipo}', ['uses' => 'ExportController@exportar']);
@@ -379,7 +324,6 @@ Route::group(array('middleware' => 'auth'), function () {
     Route::post('principal/chart', ['uses' => 'PrincipalController@index'/*,'middleware' => ['permission:report-index']*/]);
     Route::post('principal/dashSearch', ['uses' => 'PrincipalController@dashSearch'/*,'middleware' => ['permission:report-index']*/]);
 
-    Route::post('principal/poi/talleres', ['uses' => 'PrincipalController@talleres']);
 
     Route::get('images', ['uses' => 'ImageController@getServerImagesPage', 'middleware' => ['permission:image-upload']]);
     Route::get('server-images/{uid}', ['as' => 'server-images', 'uses' => 'ImageController@getServerImages', 'middleware' => ['permission:image-list']]);
@@ -414,90 +358,6 @@ Route::group(array('middleware' => 'auth'), function () {
     // Eliminar rol
     Route::delete('roles/{id}', ['uses' => 'RoleController@destroy','middleware' => ['permission:role-delete']])->name('roles.destroy');
 
-    //POI
-    Route::group(['prefix' => '/poi'], function () {
-        //POI EDUCACION
-        Route::group(['prefix' => '/educacion'], function () {
-            Route::get('/', ['uses' => 'HomeController@index']);
-
-            Route::get('/programacion', ['uses' => 'PoiEducacionController@programacion']);
-            Route::get('/seguimiento', ['uses' => 'PoiEducacionController@seguimiento']);
-
-            Route::group(['prefix' => '/observados'], function () {
-                Route::get('/', ['uses' => 'PoiEducacionController@observados']);
-                Route::post('/detail', ['uses' => 'PoiEducacionController@observadosDetail']);
-                Route::post('/borrarRelacion', ['uses' => 'PoiEducacionController@borrarRelacion']);
-
-                Route::post('/quitarImagen', ['uses' => 'PoiEducacionController@quitarImagen']);
-            });
-
-            Route::group(['prefix' => '/resumen'], function () {
-                Route::get('/', ['uses' => 'PoiEducacionController@resumen']);
-                Route::get('/{pp}/{tipo}', ['uses' => 'PoiEducacionController@resumen']);
-                Route::post('/{pp}/{tipo}/filter', ['uses' => 'PoiEducacionController@resumenFilter']);
-            });
-
-            Route::group(['prefix' => '/export'], function () {
-                Route::get('/{pp}/{tipo}/pdf', ['uses' => 'PoiEducacionController@ExportPdf']);
-                Route::get('/{pp}/{tipo}/excel', ['uses' => 'PoiEducacionController@ExportExcel']);
-            });
-
-            Route::group(['prefix' => '/reporte'], function () {
-                Route::get('/', ['uses' => 'PoiEducacionController@reporte']);
-            });
-
-            Route::post('/filter/{seccion}', ['uses' =>  'PoiEducacionController@filter']);
-
-            Route::post('/publicar', ['uses' => 'PoiEducacionController@publicar']);
-            Route::post('/add', ['uses' => 'PoiEducacionController@addTaller']);
-            Route::post('/edit', ['uses' => 'PoiEducacionController@editTaller']);
-            Route::post('/delete', ['uses' => 'PoiEducacionController@deleteTaller']);
-            Route::post('/destroy', ['uses' => 'PoiEducacionController@destroyTaller']);
-            Route::post('/update', ['uses' => 'PoiEducacionController@reprogramarTaller']);
-
-            Route::group(['prefix' => '/img'], function () {
-                Route::post('/', ['uses' => 'PoiEducacionController@formImg']);
-                Route::post('/eliminar', ['uses' => 'PoiEducacionController@formImgLogicDelete']);
-                Route::post('/meta', ['uses' => 'PoiEducacionController@showMeta']);
-                Route::post('/upload', ['uses' => 'PoiEducacionController@uploadImg']);
-                Route::get('/get/{id}', ['uses' => 'PoiEducacionController@getServerImg']);
-                Route::get('/coincidencias/{id}', ['uses' => 'PoiEducacionController@getImgCoincidencias']);
-            });
-
-            Route::post('show', ['uses' => 'PoiEducacionController@showTaller']);
-            Route::post('saveObservation', ['uses' => 'PoiEducacionController@saveObservation']);
-        });
-
-        //POI SALUD
-        /*Route::group(['prefix' => '/salud'],function () {
-            Route::get('/', ['uses' => 'HomeController@index']);
-
-            Route::get('/programacion', ['uses' => 'PoiSaludController@programacion']);
-            Route::post('/filter/{seccion}', ['uses' =>  'PoiSaludController@filter']);
-
-            Route::get('/control/{id}', ['uses' => 'PoiSaludController@cartilla']);
-
-            Route::group(['prefix' => '/intervencion'],function () {
-                Route::post('/list', ['uses' => 'PoiSaludController@index']);
-                Route::post('/save', ['uses' => 'PoiSaludController@save']);
-                Route::post('/dosis', ['uses' => 'PoiSaludController@dosis']);
-                Route::post('/edit', ['uses' => 'PoiSaludController@edit']);
-                Route::post('/show', ['uses' => 'PoiSaludController@show']);
-            });
-
-            Route::group(['prefix' => '/img'], function () {
-                Route::post('/', ['uses' => 'PoiSaludController@formImg']);
-                Route::post('/eliminar', ['uses' => 'PoiSaludController@formImgLogicDelete']);
-                Route::post('/meta', ['uses' => 'PoiSaludController@showMeta']);
-                Route::post('/upload', ['uses' => 'PoiSaludController@upload']);
-                Route::get('/get/{id}', ['uses' => 'PoiSaludController@getServerImg']);
-            });
-
-        });*/
-    });
-
-    //>>>>getUserbyDNI
-    Route::get('/getPoiUserbyDNI/{dni}', ['uses' =>  'PoiController@getPoiUserByDNI'])->where(['dni' => '[0-9]+']);
     Route::post('/getInspectorbyNomOrDNI', ['uses' =>  'UsuarioController@getInspectorbyNomOrDNI']);
 
 
@@ -508,60 +368,6 @@ Route::group(array('middleware' => 'auth'), function () {
 
     //DISTRITO
     Route::get('/listDistritoByName', ['uses' => 'UbigeoController@listDistritoByName']);
-
-    //PRUEBA
-    Route::group(['prefix' => '/indicadores'], function () {
-        Route::group(['prefix' => '/educacion'], function () {
-            Route::get('/', ['uses' => 'IndicadoreseducacioneceController@inicio', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/distrito', ['uses' => 'IndicadoreseducacioneceController@distrito', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/grado', ['uses' => 'IndicadoreseducacioneceController@grado', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/competencia', ['uses' => 'IndicadoreseducacioneceController@competencia', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/years', ['uses' => 'IndicadoreseducacioneceController@years', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/data', ['uses' => 'IndicadoreseducacioneceController@data', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/data_grafica', ['uses' => 'IndicadoreseducacioneceController@data_grafica', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-        });
-        Route::group(['prefix' => '/salud'], function () {
-            Route::get('/', ['uses' => 'SaludController@inicio', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/distrito', ['uses' => 'SaludController@distrito', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/data', ['uses' => 'SaludController@data', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/data_grafica', ['uses' => 'SaludController@data_grafica', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::get('/desnutricion', ['uses' => 'SaludController@desnutricion', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/desnutricion_data', ['uses' => 'SaludController@desnutricion_data', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/desnutricionyears', ['uses' => 'SaludController@desnutricionyears', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/desnutricion_grafica', ['uses' => 'SaludController@desnutricion_grafica', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::get('/anemia', ['uses' => 'SaludController@anemia', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/anemia_data', ['uses' => 'SaludController@anemia_data', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/anemia_grafica', ['uses' => 'SaludController@anemia_grafica', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::get('/sis', ['uses' => 'SaludController@sis', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/sis_data', ['uses' => 'SaludController@sis_data', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/sis_grafica', ['uses' => 'SaludController@sis_grafica', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::get('/hemoglobina', ['uses' => 'SaludController@hemoglobina', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/hemoglobina_data', ['uses' => 'SaludController@hemoglobina_data', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/hemoglobina_grafica', ['uses' => 'SaludController@hemoglobina_grafica', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::get('/seguro', ['uses' => 'SaludController@seguro', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/seguro_data', ['uses' => 'SaludController@seguro_data', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/seguro_grafica', ['uses' => 'SaludController@seguro_grafica', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-        });
-        Route::group(['prefix' => '/pobreza'], function () {
-            Route::get('/', ['uses' => 'PobrezaController@inicio', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/distrito', ['uses' => 'PobrezaController@distrito', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/data', ['uses' => 'PobrezaController@data', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/data_grafica', ['uses' => 'PobrezaController@data_grafica', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-        });
-        Route::group(['prefix' => '/vivienda'], function () {
-            Route::get('/', ['uses' => 'PobrezaController@inicio', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/distrito', ['uses' => 'PobrezaController@distrito', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/data', ['uses' => 'PobrezaController@data', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-            Route::post('/data_grafica', ['uses' => 'PobrezaController@data_grafica', 'middleware' => ['permission:pir-indicadoresbrecha']]);
-        });
-        Route::group(['prefix' => '/reporte_general'], function () {
-            Route::get('/', ['uses' => 'ReportegeneralController@inicio', 'middleware' => ['permission:pir-indicadoresbrecha-resumen']]);
-            Route::post('/distrito', ['uses' => 'ReportegeneralController@distrito', 'middleware' => ['permission:pir-indicadoresbrecha-resumen']]);
-            Route::post('/data', ['uses' => 'ReportegeneralController@data', 'middleware' => ['permission:pir-indicadoresbrecha-resumen']]);
-            Route::post('/data_pobreza', ['uses' => 'ReportegeneralController@data_pobreza', 'middleware' => ['permission:pir-indicadoresbrecha-resumen']]);
-            Route::post('/data_salud', ['uses' => 'ReportegeneralController@data_salud', 'middleware' => ['permission:pir-indicadoresbrecha-resumen']]);
-        });
-    });
 
     // PROYECTOS
     Route::group(['prefix' => '/proyecto'], function () {
