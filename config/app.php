@@ -180,7 +180,6 @@ return [
         //FUERA DE LARAVEL
         Laratrust\LaratrustServiceProvider::class,
         // Sofa\Eloquence\ServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
         // OwenIt\Auditing\AuditingServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
@@ -234,7 +233,6 @@ return [
         // NO TIENE LARAVEL
         'Entrust'   => Laratrust\LaratrustFacade::class,
         'Laratrust' => Laratrust\LaratrustFacade::class,
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Pusher'    =>  Pusher\Pusher::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
