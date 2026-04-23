@@ -9,8 +9,10 @@ use Response;
 use Faker\Provider\DateTime;
 use sayhuite\Taller_Usuario;
 use Illuminate\View\View;
-use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class PrincipalController extends Controller
 {
@@ -245,117 +247,96 @@ class PrincipalController extends Controller
             'Avance %'
         ];
 
-        return Excel::create('reporte_financiero_' . $fecha, function ($excel) use ($rows, $headers, $fecha, $totales) {
-            $excel->sheet('Financiero Diario', function ($sheet) use ($rows, $headers, $fecha, $totales) {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Financiero Diario');
 
-                // 🟩 1. Título principal
-                $sheet->mergeCells('A1:J1');
-                $sheet->row(1, ['CONSULTA AMIGABLE CON FECHA ' . date('d-m-Y', strtotime($fecha))]);
-                $sheet->cells('A1:J1', function ($cells) {
-                    $cells->setAlignment('center');
-                    $cells->setFontWeight('bold');
-                    $cells->setFontSize(14);
-                });
+        $sheet->mergeCells('A1:J1');
+        $sheet->setCellValue('A1', 'CONSULTA AMIGABLE CON FECHA ' . date('d-m-Y', strtotime($fecha)));
+        $sheet->getStyle('A1:J1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:J1')->getFont()->setBold(true)->setSize(14);
 
-                // 🟦 2. Encabezados
-                $sheet->row(3, $headers);
-                $sheet->cells('A3:J3', function ($cells) {
-                    $cells->setBackground('#d9d9d9');
-                    $cells->setFontWeight('bold');
-                    $cells->setAlignment('center');
-                });
+        $sheet->fromArray($headers, null, 'A3');
+        $sheet->getStyle('A3:J3')->getFont()->setBold(true);
+        $sheet->getStyle('A3:J3')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A3:J3')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('D9D9D9');
 
-                // Establecer anchos fijos para todas las columnas excepto B
-                $columnWidths = [
-                    'A' => 12,
-                    'B' => 50,
-                    'C' => 18,
-                    'D' => 18,
-                    'E' => 18,
-                    'F' => 22,
-                    'G' => 25,
-                    'H' => 18,
-                    'I' => 18,
-                    'J' => 12,
-                ];
+        $columnWidths = [
+            'A' => 12,
+            'B' => 50,
+            'C' => 18,
+            'D' => 18,
+            'E' => 18,
+            'F' => 22,
+            'G' => 25,
+            'H' => 18,
+            'I' => 18,
+            'J' => 12,
+        ];
 
-                foreach ($columnWidths as $column => $width) {
-                    $sheet->getColumnDimension($column)->setWidth($width);
-                }
+        foreach ($columnWidths as $column => $width) {
+            $sheet->getColumnDimension($column)->setWidth($width);
+        }
 
-                // Aplicar estilos
+        $startRow = 4;
+        foreach ($rows as $index => $row) {
+            $excelRow = $startRow + $index;
+            $sheet->fromArray([
+                $row['cod_unif'],
+                $row['nom_proyec'],
+                $row['pia_dia'],
+                $row['pim_dia'],
+                $row['certificacion_dia'],
+                $row['comp_anual_dia'],
+                $row['ate_comp_anual_dia'],
+                $row['dev_dia'],
+                $row['girado_dia'],
+                round($row['a_financ_dia'], 2) . '%',
+            ], null, 'A' . $excelRow);
+        }
 
-                // 🟨 3. Datos
-                $startRow = 4;
-                foreach ($rows as $index => $row) {
-                    $sheet->row($startRow + $index, [
-                        $row['cod_unif'],
-                        $row['nom_proyec'],
-                        $row['pia_dia'],
-                        $row['pim_dia'],
-                        $row['certificacion_dia'],
-                        $row['comp_anual_dia'],
-                        $row['ate_comp_anual_dia'],
-                        $row['dev_dia'],
-                        $row['girado_dia'],
-                        round($row['a_financ_dia'], 2) . '%'
-                    ]);
-                }
+        $lastDataRow = $startRow + count($rows) - 1;
+        $columnasNumericas = ['C', 'D', 'E', 'F', 'G', 'H', 'I'];
+        foreach ($columnasNumericas as $col) {
+            $sheet->getStyle($col . '4:' . $col . $lastDataRow)
+                ->getAlignment()
+                ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+                ->setWrapText(true);
+            $sheet->getStyle($col . '4:' . $col . $lastDataRow)
+                ->getNumberFormat()
+                ->setFormatCode('#,##0.00');
+        }
 
-                // 🟥 4. Formato columnas numéricas
-                $lastDataRow = $startRow + count($rows) - 1;
-                $columnasNumericas = ['C', 'D', 'E', 'F', 'G', 'H', 'I'];
+        $sheet->getStyle('J4:J' . $lastDataRow)
+            ->getAlignment()
+            ->setHorizontal(Alignment::HORIZONTAL_RIGHT);
 
-                foreach ($columnasNumericas as $col) {
-                    // Alineación a la derecha
-                    $sheet->getStyle($col . '4:' . $col . $lastDataRow)
-                        ->getAlignment()
-                        ->setHorizontal(Alignment::HORIZONTAL_CENTER)
-                        ->setWrapText(true);
+        $totalRow = $lastDataRow + 1;
+        $sheet->fromArray([
+            count($rows),
+            'TOTALES',
+            $totales->pia_dia,
+            $totales->pim_dia,
+            $totales->certificacion_dia,
+            $totales->comp_anual_dia,
+            $totales->ate_comp_anual_dia,
+            $totales->dev_dia,
+            $totales->girado_dia,
+            round($totales->a_financ_dia, 2) . '%',
+        ], null, 'A' . $totalRow);
 
-                    // Formato numérico
-                    $sheet->getStyle($col . '4:' . $col . $lastDataRow)
-                        ->getNumberFormat()
-                        ->setFormatCode('#,##0.00');
-                }
+        $sheet->getStyle('A' . $totalRow . ':J' . $totalRow)->getFont()->setBold(true);
+        $sheet->getStyle('A' . $totalRow . ':J' . $totalRow)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+        $sheet->getStyle('A' . $totalRow . ':J' . $totalRow)->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('F2F2F2');
+        $sheet->getStyle('B' . $totalRow)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+        $sheet->getStyle('A' . $totalRow)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
-                // Alinear columna de porcentaje
-                $sheet->getStyle('J4:J' . $lastDataRow)
-                    ->getAlignment()
-                    ->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+        $filename = 'reporte_financiero_' . $fecha . '.xlsx';
+        $tempFile = tempnam(sys_get_temp_dir(), 'xlsx_');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($tempFile);
 
-                // 🟩 5. Totales
-                $sheet->row($lastDataRow + 1, [
-                    count($rows),
-                    'TOTALES',
-                    $totales->pia_dia,
-                    $totales->pim_dia,
-                    $totales->certificacion_dia,
-                    $totales->comp_anual_dia,
-                    $totales->ate_comp_anual_dia,
-                    $totales->dev_dia,
-                    $totales->girado_dia,
-                    round($totales->a_financ_dia, 2) . '%'
-                ]);
-
-                // 🟦 6. Estilo de totales
-                $sheet->cells('A' . ($lastDataRow + 1) . ':J' . ($lastDataRow + 1), function ($cells) {
-                    $cells->setFontWeight('bold');
-                    $cells->setBackground('#f2f2f2');
-                    $cells->setAlignment('right');
-                });
-
-                $sheet->cells('B' . ($lastDataRow + 1), function ($cells) {
-                    $cells->setAlignment('left');
-                });
-
-                $sheet->cells('A' . ($lastDataRow + 1), function ($cells) {
-                    $cells->setAlignment('center');
-                });
-
-                $sheet->setAutoSize(true);
-            });
-        })->download('xlsx');
+        return response()->download($tempFile, $filename)->deleteFileAfterSend(true);
     }
 
     public function proyectosPorGerencia()
