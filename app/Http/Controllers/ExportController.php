@@ -6,14 +6,7 @@ use Illuminate\Http\Request;
 use sayhuite\PipTotalPriori;
 use sayhuite\MantenimientoVia;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
-
-use PHPExcel_Style_Alignment;
-use PHPExcel_Style_Border;
-use PHPExcel_Style_Fill;
-use PHPExcel_Style_NumberFormat;
-use PHPExcel_Worksheet_Drawing;
 use PhpOffice\PhpSpreadsheet\Chart\Chart;
 use PhpOffice\PhpSpreadsheet\Chart\DataSeries;
 use PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
@@ -23,7 +16,7 @@ use PhpOffice\PhpSpreadsheet\Chart\Title;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Style\Fill;;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
@@ -1772,11 +1765,11 @@ class ExportController extends Controller
                 'size' => 48
             ],
             'alignment' => [
-                'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER
+                'vertical' => Alignment::VERTICAL_CENTER,
+                'horizontal' => Alignment::HORIZONTAL_CENTER
             ],
             'fill' => [
-                'fillType' => PHPExcel_Style_Fill::FILL_SOLID,
+                'fillType' => Fill::FILL_SOLID,
                 'startColor' => ['rgb' => 'A9D08E']
             ],
             'borders' => [
