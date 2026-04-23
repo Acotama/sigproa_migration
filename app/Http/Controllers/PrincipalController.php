@@ -470,40 +470,6 @@ class PrincipalController extends Controller
         return $string ? 'hace ' . implode(', ', $string) : 'hace un momento';
     }
 
-    public function getPips()
-    {
-        $PipTp = PipTotalPriori::select(
-            'grli_pip_total_priori.id',
-            'grli_pip_total_priori.cod_unif',
-            'tipo_pry',
-            'm_pim',
-            'm_deveng',
-            DB::raw('(select SUM(certif::NUMERIC(11,2)) from inf_financiera where inf_financiera.cod_unif::text = grli_pip_total_priori.cod_unif and anio_financ = \'2017\') as certificado'),
-            DB::raw('(select girado from grli_pip_total_girado where grli_pip_total_girado.cod_unif::text = grli_pip_total_priori.cod_unif and anio = \'2017\') as girado'),
-            DB::raw('(CASE WHEN grli_pip_total_priori.id IN(select idproyecto from decretoxproyecto dp INNER JOIN decretos d ON dp.iddecreto = d.id where d.descripcion like \'%CREDITO SUPLEMENTARIO%\') THEN \'1\'
-                                   ELSE \'0\'
-                              END) as duds'),
-            DB::raw('(CASE WHEN grli_pip_total_priori.id IN(select idproyecto from decretoxproyecto dp INNER JOIN decretos d ON dp.iddecreto = d.id where d.descripcion like \'%EMERGENCIA%\') THEN \'1\'
-                                   ELSE \'0\'
-                              END) as continuidad')
-        )
-            ->join('inf_financiera', DB::raw('inf_financiera.cod_unif::text'), '=', 'grli_pip_total_priori.cod_unif')->where('inf_financiera.anio_financ', '=', '2017');
-
-        $Procompite = Procompite::select(
-            'grli_pip_procompite.id',
-            'grli_pip_procompite.cod_unif',
-            DB::raw('\'PROCOMPITE\' as tipo_pry'),
-            'm_pim',
-            'm_deveng',
-            DB::raw('(select SUM(certif::NUMERIC(11,2)) from inf_financiera where inf_financiera.cod_unif::text = grli_pip_procompite.cod_unif and anio_financ = \'2017\') as certificado'),
-            DB::raw('(select girado from grli_pip_total_girado where grli_pip_total_girado.cod_unif::text = grli_pip_procompite.cod_unif and anio = \'2017\') as girado'),
-            DB::raw('\'0\' as duds'),
-            DB::raw('\'0\' as continuidad')
-        )
-            ->join('inf_financiera', DB::raw('inf_financiera.cod_unif::text'), '=', 'grli_pip_procompite.cod_unif')->where('inf_financiera.anio_financ', '=', '2017');
-
-        $Total = $PipTp->union($Procompite)->get()->toArray();
-    }
 
     public function talleres()
     {

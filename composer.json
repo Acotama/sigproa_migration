@@ -13,7 +13,7 @@
         "phpoffice/phpspreadsheet": "^1.8",
         "phpoffice/phpword": "^0.18.3",
         "pusher/pusher-php-server": "^3.4",
-        "zizaco/entrust": "^1.9",
+        "santigarcor/laratrust": "^5.2",
         "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {

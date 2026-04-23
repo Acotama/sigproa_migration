@@ -21,10 +21,6 @@ class PdfController extends Controller
         $this->pdf = $pdfRepository;
     }
 
-    public function getUpload()
-    {
-        return view('pages.upload');
-    }
 
     public function postUpload()
     {

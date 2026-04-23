@@ -173,38 +173,6 @@ class NoPrevistasController extends Controller
 
     }
 
-    public function datas(Request $request){
-        mb_internal_encoding('UTF8');
-        $input = $request->all();
-        $data = DB::table('vw_pry_habilitadores_all')->select(DB::raw("vw_pry_habilitadores_all.*,anulacion.n_anulacion,credito.n_credito"))
-        ->leftjoin(DB::RAW("(select cod_uni,max(n_anulacion) as n_anulacion from tb_anulacion group by cod_uni) anulacion"),"vw_pry_habilitadores_all.cod_unif","=","anulacion.cod_uni")
-        ->leftjoin(DB::RAW("(select cod_uni,max(n_credito) as n_credito from tb_credito group by cod_uni) credito"),"vw_pry_habilitadores_all.cod_unif","=","credito.cod_uni");
-
-        $recordsTotal = $data->get()->count();
-
-        if(!empty($input['search']['value'])){
-            $ss = '%'. ($input['search']['value']) .'%';
-            $data = $data->whereRaw("( COALESCE(cod_unif::text, '')) ilike ?",$ss);
-        }
-
-        $order = $input['order'][0];
-        $oColumn = $order['column'];
-        $oType   = $order['dir'];
-
-        $recordsFiltered = $data->get()->count();
-        if($input['columns'][$oColumn]['name'] != 'accion') {
-            $data = $data->orderBy($input['columns'][$oColumn]['name'], "$oType");
-        }
-        $start   =  $input['start'];
-        $length  =  $input['length'];
-        $data  = $data->skip($start)->take($length)->get();
-
-        return Response([
-            'data' => $data,
-            'recordsTotal' => $recordsTotal,
-            'recordsFiltered' => $recordsFiltered
-        ]);
-    }
 
     public function insertardata(Request $request){
         $now = new DateTime();

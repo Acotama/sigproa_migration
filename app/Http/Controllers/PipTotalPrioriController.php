@@ -351,16 +351,6 @@ class PipTotalPrioriController extends Controller {
         return $combo;
     }
 
-    public function comboEstAntig($id) {
-        $data = EstAntig::select('estado')
-                        ->where('estado', '=', $id)->get();
-
-        $combo = '<option value=""> -- Seleccionar -- </option>';
-        foreach ($data as $value) {
-            $combo = $combo . ' <option value="' . $value['estado'] . '">' . $value['estado'] . '</option>';
-        }
-        return $combo;
-    }
 
     //Ventana mostar
     public function show(Request $request) {
@@ -1222,14 +1212,6 @@ class PipTotalPrioriController extends Controller {
         return $pdf->stream($PipTP['cod_unif'].'.pdf');
     }
 
-    public function exportarExcel(Request $request){
-        // return Excel::create('Sayhuite', function($excel) use ($data,$path) {
-        //     $excel->sheet('Sayhuite', function($sheet) use ($data,$path){
-        //         $sheet->setOrientation('landscape');
-        //         $sheet->loadView($path, array('data' => $data));
-        //     });
-        // })->download('xls');
-    }
 
     public function imgUpload(ImageRepository $image){
         /*

@@ -276,41 +276,6 @@ class UsuarioController extends Controller {
         mail($user['email'], "¡Usuario Activado! MIPLAN 2021 - Gobierno Regional de Lima", $mensaje);
     }
 
-    public function getUserByDNI($dni){
-        $Usuario = Usuario::select([
-            'usuario.idusuario',
-            'usuario.nombres',
-            'usuario.apellidos',
-            'usuario.intervencion',
-            DB::raw('(SELECT array_to_string( (array_agg(sigla))[1:2], \',\' ) FROM usuario_dependencia INNER JOIN dependencia ON usuario_dependencia.iddependencia = dependencia.iddependencia where usuario_dependencia.idusuario::int = usuario.idusuario::int) AS ejecutora')
-        ])
-        ->where('usuario.dni','=',$dni)
-        ->first();
-
-        $mUsuario = Usuario::find($Usuario['idusuario']);
-
-        //$isAdmin = ($mUsuario->hasRole('adminpoi') or $mUsuario->hasRole('admin'));
-
-        /*$Actividad = Actividad::select('poi_actividad.codigo','poi_actividad.nombre')
-                ->join('poi_producto', 'poi_producto.id','=','poi_actividad.id_poi_producto')
-                ->join('poi_categoria_presupuestal', 'poi_categoria_presupuestal.id','=','poi_producto.id_poi_categoria_presupuestal')
-                ->join('poi_sector', 'poi_sector.id','=','poi_categoria_presupuestal.id_poi_sector');
-
-            if(!$isAdmin){
-                $userDependencies = $Usuario->unidad()->pluck('idsector')->toArray();
-
-                $Actividad->whereIn('poi_sector.id',$userDependencies);
-            }
-
-            //MODAL DROPDOWN
-            $Actividad = $Actividad->pluck('nombre','codigo')->toArray();
-        */
-
-        return Response([
-            'usuario' => $Usuario/*,
-            'actividad' => $Actividad*/
-        ]);
-    }
 
     public function getInspectorbyNomOrDNI(Request $request){
         $input = $request->all();

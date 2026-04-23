@@ -3430,50 +3430,6 @@ class ProyectoController extends Controller
     )->render();
   }
 
-  public function exportarexcelformato(Request $request)
-  {
-
-    $data = DB::select("select orden,grupo,vw_data_clasificacion.*  from vw_data_clasificacion 
-      inner join proyectos_orden on vw_data_clasificacion.cant_proyectos::integer=proyectos_orden.cod_unif order by grupo,orden");
-
-    $suma = DB::table('vw_data_clasificacion')->select(DB::RAW("max(orden) orden, grupo,sum(pia_dia) pia_dia,sum(pim_dia) pim_dia,sum(certificacion_dia) certificacion_dia,sum(comp_anual_dia) comp_anual_dia,
-      sum(ate_comp_anual_dia) ate_comp_anual_dia,sum(dev_dia) dev_dia,sum(girado_dia) girado_dia,case when sum(pim_dia) = 0 then 0 else  sum(dev_dia)/sum(pim_dia)*100 end as avance"))
-      ->join('proyectos_orden', DB::RAW('vw_data_clasificacion.cant_proyectos::integer'), 'proyectos_orden.cod_unif')
-      ->groupby('grupo')
-      ->orderby('grupo')->get();
-
-    foreach ($suma as $key => $value) {
-      if ($value->grupo == 1) {
-        $grupo1 = $suma->where('grupo', '=', 1)->first();
-      }
-      if ($value->grupo == 2) {
-        $grupo2 = $suma->where('grupo', '=', 2)->first();;
-      }
-      if ($value->grupo == 3) {
-        $grupo3 = $suma->where('grupo', '=', 3)->first();;
-      }
-      if ($value->grupo == 4) {
-        $grupo4 = $suma->where('grupo', '=', 4)->first();;
-      }
-      if ($value->grupo == 5) {
-        $grupo5 = $suma->where('grupo', '=', 5)->first();;
-      }
-      if ($value->grupo == 6) {
-        $grupo6 = $suma->where('grupo', '=', 6)->first();;
-      }
-    }
-
-    return response()
-      ->view('proyecto.exportarexcelformato', ['data' => $data, 'grupo1' => $grupo1, 'grupo2' => $grupo2, 'grupo3' => $grupo3, 'grupo4' => $grupo4, 'grupo5' => $grupo5, 'grupo6' => $grupo6], 200)
-      ->header('Content-Description', 'File Transfer')
-      ->header('Content-Type', 'text/html; charset=utf-8')
-      ->header('Content-Disposition', 'attachment; filename=proyectos.xls')
-      ->header('Content-Transfer-Encoding', 'binary')
-      ->header('Connection', 'Keep-Alive')
-      ->header('Expires', '0')
-      ->header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
-      ->header('Pragma', 'public');
-  }
 
   public function showprydev(Request $request)
   {

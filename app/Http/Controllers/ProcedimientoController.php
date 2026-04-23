@@ -217,64 +217,6 @@ class ProcedimientoController extends Controller
         }
     }
 
-    public function guardar_2(Request $request)
-    {
-        $input=$request->all();
-        return $input;
-        if($request->hasFile('archivo')){
-            $path = $request->file('archivo')->getRealPath();
-            $data = Excel::load($path, function($reader) {
-            })->get();
-            $heading=$data->getheading();
-            // dd($heading);
-            if(!empty($data) && $data->count()){
-              foreach ($data as $key => $value) {
-                $insert[] =
-                 [
-                   "id_procedimiento_seleccion"=>$value->$heading[0],
-                   "nom_pro_seleccion"=>$value->$heading[1],
-                   "cod_unif"=>$value->$heading[2],
-                   "norma_aplicable"=>$value->$heading[3],
-                   "objeto_contratacion"=>$value->$heading[4],
-                   "requerimiento_documento"=>$value->$heading[5],
-                   "requerimiento_fecha"=>$value->$heading[6],
-                   "certificacion_documento"=>$value->$heading[7],
-                   "certificacion_fecha"=>$value->$heading[8],
-                   "aprob_exp_documento"=>$value->$heading[9],
-                   "aprob_exp_fecha"=>$value->$heading[10],
-                   "com_sel_documento"=>$value->$heading[11],
-                   "com_sel_fecha"=>$value->$heading[12],
-                   "com_sel_miembros"=>$value->$heading[13],
-                   "aprob_bases_documento"=>$value->$heading[14],
-                   "aprob_bases_fecha"=>$value->$heading[15],
-                   "fecha_convocatoria"=>$value->$heading[16],
-                   "tipo_proc_selec"=>$value->$heading[17],
-                   "num_proc_selec"=>$value->$heading[18],
-                   "valor_ref_est"=>$value->$heading[19],
-                   "estado"=>$value->$heading[20],
-                   "estado_fecha"=>$value->$heading[21],
-                   "estado_obs"=>$value->$heading[22],
-                   "buena_pro_est_fecha"=>$value->$heading[23],
-                   "buena_pro_fecha_real"=>$value->$heading[24],
-                   "buena_pro_obs"=>$value->$heading[25],
-                   "prov_adjudicado"=>$value->$heading[26],
-                   "valor_adjudicado"=>$value->$heading[27],
-                   "cont_documento"=>$value->$heading[28],
-                   "cont_monto"=>$value->$heading[29],
-                   "cont_fecha"=>$value->$heading[30],
-                   "ano"=>$value->$heading[31],
-                   "fech_act"=>date('Y-m-d')
-                ];
-              }
-              if(!empty($insert)){
-                DB::table('procedimiento_seleccion')->delete();
-                DB::table('procedimiento_seleccion')->insert($insert);
-                // dd('Se inserto correctamente');
-                return view('procedimiento/subir',['msg'=>'Se inserto correctamente']);
-              }
-            }
-        }
-    }
 
     public function nuevo(Request $request)
     {

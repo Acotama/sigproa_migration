@@ -3,9 +3,9 @@
 namespace sayhuite;
 
 use Illuminate\Database\Eloquent\Model;
-use Zizaco\Entrust\EntrustRole;
+use Laratrust\Models\LaratrustRole;
 
-class Role extends EntrustRole
+class Role extends LaratrustRole
 {
 
 }

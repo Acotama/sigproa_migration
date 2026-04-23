@@ -212,16 +212,6 @@ class ProcompiteController extends Controller
         return $combo;
     }
 
-    public function comboEstAntig($id) {
-        $data = EstAntig::select('estado')
-            ->where('estado', '=', $id)->get();
-
-        $combo = '<option value="0"> -- Seleccionar -- </option>';
-        foreach ($data as $value) {
-            $combo = $combo . ' <option value="' . $value['estado'] . '">' . $value['estado'] . '</option>';
-        }
-        return $combo;
-    }
 
     //Ventana crear
     public function create() {
@@ -888,12 +878,6 @@ class ProcompiteController extends Controller
         ], 200);
     }
 
-    public function generateTmpName(){
-
-        $tmpName=substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyzABCDEFEGHIJKLMNÑOPQRSTUVWXYZ"), 0, 6);
-
-        return $tmpName;
-    }
 
     public function deletePdf(Request $request)
     {
@@ -940,17 +924,7 @@ class ProcompiteController extends Controller
     }
 
     //================= FIN PDF =================
-    public function deleteFile($file, $path)
-    {
-        unlink($path.$file);
-    }
 
-    public function movePdf( $file, $filename,$path)
-    {
-        $pdf = $file->move($path , $filename);
-
-        return $pdf;
-    }
 
 
 

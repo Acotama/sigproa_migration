@@ -178,7 +178,7 @@ return [
         sayhuite\Providers\EventServiceProvider::class,
         sayhuite\Providers\RouteServiceProvider::class,
         //FUERA DE LARAVEL
-        Zizaco\Entrust\EntrustServiceProvider::class,
+        Laratrust\LaratrustServiceProvider::class,
         // Sofa\Eloquence\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         // OwenIt\Auditing\AuditingServiceProvider::class,
@@ -232,7 +232,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         // NO TIENE LARAVEL
-        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
+        'Entrust'   => Laratrust\LaratrustFacade::class,
+        'Laratrust' => Laratrust\LaratrustFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Pusher'    =>  Pusher\Pusher::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
