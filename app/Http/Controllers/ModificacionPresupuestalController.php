@@ -8,6 +8,8 @@ use DateTime;
 use Excel;
 use sayhuite\PipTotalPriori;
 use GuzzleHttp\Client;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ModificacionPresupuestalController extends Controller
 {
@@ -2721,21 +2723,16 @@ class ModificacionPresupuestalController extends Controller
         $anio = $input['anio'];
         $formato_excel= ["id_a","ue_a","nombre_pry_a","ff_a","cui_a","tipo_a","costo_actualizacion_a","devengado_acu_a","saldo_ejec_a","pia_a","pim_a","id_doc","memo_grppat","doc_opmi","memo_uei","saldo_anu_a","pim_modificado_a","id_c","ue_c","nombre_pry_c","cui_c","tipo_c","costo_actualizacion_c","devengado_acu_c","saldo_ejec_c","pia_c","pim_c","credito_c","certificacion_c","saldo_balance_c","pim_modificado_c","fecha"];
         if($request->hasFile('file')){
-            // \Config::set('excel.import.startRow', 5);
-            $data_verificar =  Excel::selectSheets('MP')->load($request->file('file')->getRealPath(), function ($reader){
-            });
-            if(count($data_verificar->toArray()) > 5){
-                \Config::set('excel.import.startRow', 5);
-                $data_excel =  Excel::selectSheets('MP')->load($request->file('file')->getRealPath(), function ($reader){
-                });
-                
+            $path = $request->file('file')->getRealPath();
+            $data_excel = $this->loadSheetRowsWithHeading($path, 'MP', 5);
+            if(count($data_excel) > 0){
                 // Columnas
-                $headerRow = $data_excel->first()->keys()->toArray();
+                $headerRow = array_keys($data_excel[0]);
                 $resultado = array_diff($formato_excel, $headerRow);
                 $data = [];
                 $grupo = [];
                 if(count($resultado) == 0){
-                    foreach ($data_excel->toArray() as $key => $row) {
+                    foreach ($data_excel as $key => $row) {
                         if(!empty(trim($row['id_doc']))){
                             $grupo[] = trim($row['id_doc']);
                         }
@@ -2747,7 +2744,7 @@ class ModificacionPresupuestalController extends Controller
                             $data_array_credito=[];
                             $data_array_documento=[];
                             $id_r = $row;
-                            foreach ($data_excel->toArray() as $key => $row) {
+                            foreach ($data_excel as $key => $row) {
                                 $id_a = trim($row['id_a']);
                                 $id_c = trim($row['id_c']);
                                 $id_documento = trim($row['id_doc']);
@@ -2854,6 +2851,59 @@ class ModificacionPresupuestalController extends Controller
         $object = json_encode($array);
         $object1 = json_decode($object);
         return $object1;
+    }
+
+    private function loadSheetRowsWithHeading($path, $sheetName, $headingRow)
+    {
+        $reader = IOFactory::createReaderForFile($path);
+        $reader->setReadDataOnly(true);
+
+        if (method_exists($reader, 'setLoadSheetsOnly')) {
+            $reader->setLoadSheetsOnly([$sheetName]);
+        }
+
+        $spreadsheet = $reader->load($path);
+        $worksheet = $spreadsheet->getSheetByName($sheetName);
+        if (!$worksheet) {
+            return [];
+        }
+
+        $highestRow = (int) $worksheet->getHighestDataRow();
+        $highestColumn = $worksheet->getHighestDataColumn();
+        $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
+
+        if ($highestRow <= $headingRow || $highestColumnIndex < 1) {
+            return [];
+        }
+
+        $headers = [];
+        for ($col = 1; $col <= $highestColumnIndex; $col++) {
+            $header = trim((string) $worksheet->getCellByColumnAndRow($col, $headingRow)->getValue());
+            $header = $this->normalizeSpreadsheetHeader($header);
+            if ($header === '') {
+                $header = 'col_' . $col;
+            }
+            $headers[$col] = $header;
+        }
+
+        $rows = [];
+        for ($row = $headingRow + 1; $row <= $highestRow; $row++) {
+            $item = [];
+            foreach ($headers as $col => $key) {
+                $value = $worksheet->getCellByColumnAndRow($col, $row)->getValue();
+                $item[$key] = is_null($value) ? '' : $value;
+            }
+            $rows[] = $item;
+        }
+
+        return $rows;
+    }
+
+    private function normalizeSpreadsheetHeader($header)
+    {
+        $header = strtolower(trim($header));
+        $header = preg_replace('/[^a-z0-9]+/', '_', $header);
+        return trim($header, '_');
     }
 
     public function consulta_modificacion(Request $request){
