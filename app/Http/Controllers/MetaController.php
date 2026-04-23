@@ -4,7 +4,8 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PHPExcel_IOFactory;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class MetaController extends Controller
 {
@@ -331,7 +332,7 @@ class MetaController extends Controller
     {
         $path = $file->getRealPath();
 
-        $reader = PHPExcel_IOFactory::createReaderForFile($path);
+        $reader = IOFactory::createReaderForFile($path);
         $reader->setReadDataOnly(true);
 
         $sheetNames = $reader->listWorksheetNames($path);
@@ -360,7 +361,7 @@ class MetaController extends Controller
 
         try {
             $path = $request->file('file')->getRealPath();
-            $reader = PHPExcel_IOFactory::createReaderForFile($path);
+            $reader = IOFactory::createReaderForFile($path);
             $sheetNames = $reader->listWorksheetNames($path);
             if (!is_array($sheetNames) || count($sheetNames) === 0) {
                 $sheetNames = ['Sheet1'];
@@ -382,7 +383,7 @@ class MetaController extends Controller
     {
         $highestRow = (int) $worksheet->getHighestDataRow();
         $highestColumn = $worksheet->getHighestDataColumn();
-        $highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);
+        $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
 
         if ($highestRow < 1 || $highestColumnIndex < 1) {
             return [];
@@ -416,7 +417,7 @@ class MetaController extends Controller
         $value = $cell->getValue();
 
         if (is_string($value) && strlen($value) > 0 && $value[0] === '=') {
-            $old = $cell->getOldCalculatedValue();
+            $old = method_exists($cell, 'getOldCalculatedValue') ? $cell->getOldCalculatedValue() : null;
             if ($old !== null) {
                 return $old;
             }
