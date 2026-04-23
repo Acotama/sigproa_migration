@@ -268,12 +268,6 @@ class ExportController extends Controller
             ->header('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
             ->header('Pragma', 'public');
 
-        /*return Excel::create('Sayhuite', function($excel) use ($data,$path) {
-            $excel->sheet('Sayhuite', function($sheet) use ($data,$path){
-                $sheet->setOrientation('landscape');
-                $sheet->loadView($path, array('data' => $data));
-            });
-        })->download('xls');*/
     }
 
     public function exportar_proyecto(Request $request)
@@ -506,14 +500,6 @@ class ExportController extends Controller
 
 
 
-        // Excel::create('reportediario', function($excel) use ($data,$data_metas,$data_dia,$data_hoy,$data_dev_acum,$resumen_pliego,$resumen_pliego_total,$historial_mensual,$historial_mensual_meta,$mefvs_formato12b,$fecha,$fecha_acu) {
-        //     $excel->sheet('reportediario', function($sheet)  use ($data,$data_metas,$data_dia,$data_hoy,$data_dev_acum,$resumen_pliego,$resumen_pliego_total,$historial_mensual,$historial_mensual_meta,$mefvs_formato12b,$fecha,$fecha_acu) {
-        //         $sheet->loadView('export.template.reporte_diario',array('data'=>$data,'data_metas'=>$data_metas,'data_dia'=>$data_dia,
-        //         'data_hoy'=>$data_hoy,'data_dev_acum'=>$data_dev_acum,'resumen_pliego' => $resumen_pliego,'resumen_pliego_total' => $resumen_pliego_total,
-        //         'historial_mensual' => $historial_mensual,'historial_mensual_meta' => $historial_mensual_meta,
-        //         'mefvs_formato12b'=>$mefvs_formato12b,'fecha'=>$fecha,'fecha_acu'=>$fecha_acu));        
-        //     });
-        // })->download('xls');
     }
 
     public function reporte_diario_f12(Request $request)
@@ -2584,14 +2570,6 @@ class ExportController extends Controller
 
 
 
-        // Excel::create('reportediario', function($excel) use ($data,$data_metas,$data_dia,$data_hoy,$data_dev_acum,$resumen_pliego,$resumen_pliego_total,$historial_mensual,$historial_mensual_meta,$mefvs_formato12b,$fecha,$fecha_acu) {
-        //     $excel->sheet('reportediario', function($sheet)  use ($data,$data_metas,$data_dia,$data_hoy,$data_dev_acum,$resumen_pliego,$resumen_pliego_total,$historial_mensual,$historial_mensual_meta,$mefvs_formato12b,$fecha,$fecha_acu) {
-        //         $sheet->loadView('export.template.reporte_diario',array('data'=>$data,'data_metas'=>$data_metas,'data_dia'=>$data_dia,
-        //         'data_hoy'=>$data_hoy,'data_dev_acum'=>$data_dev_acum,'resumen_pliego' => $resumen_pliego,'resumen_pliego_total' => $resumen_pliego_total,
-        //         'historial_mensual' => $historial_mensual,'historial_mensual_meta' => $historial_mensual_meta,
-        //         'mefvs_formato12b'=>$mefvs_formato12b,'fecha'=>$fecha,'fecha_acu'=>$fecha_acu));        
-        //     });
-        // })->download('xls');
     }
 
     public function reporte_grafico(Request $request)
