@@ -15,7 +15,7 @@ use sayhuite\SubEtapa;
 use sayhuite\EstAntig;
 use sayhuite\MantenimientoVia;
 
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request as Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use File;

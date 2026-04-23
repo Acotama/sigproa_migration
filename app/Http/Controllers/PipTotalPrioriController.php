@@ -15,7 +15,7 @@ use sayhuite\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Validator;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request as Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use sayhuite\InfFinanciera;

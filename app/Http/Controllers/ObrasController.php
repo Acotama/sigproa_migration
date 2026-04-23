@@ -18,7 +18,7 @@ use DB;
 use Response;
 use Datetime;
 use sayhuite\Logic\Tools\Tools;
-use Input;
+use Illuminate\Support\Facades\Request as Input;
 use File;
 
 class ObrasController extends Controller

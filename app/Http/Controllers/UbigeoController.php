@@ -4,7 +4,7 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use sayhuite\Distrito;
-use Input;
+use Illuminate\Support\Facades\Request as Input;
 use DB;
 use sayhuite\Usuario;
 
