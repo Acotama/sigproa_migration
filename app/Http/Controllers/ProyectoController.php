@@ -9,11 +9,10 @@ use sayhuite\InfFinanciera;
 use sayhuite\Obras;
 use Illuminate\Support\Facades\DB;
 use sayhuite\procedures\sp_Procedures;
-use Maatwebsite\Excel\Facades\Excel;
-use PHPExcel;
-use PHPExcel_Style;
-use PHPExcel_Style_Border;
-use PhpOffice\PhpWord\Style\Border;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ProyectoController extends Controller
 {
@@ -393,99 +392,90 @@ class ProyectoController extends Controller
     $headers = $data['Headers'];
     $fecha = $data['fecha_financiera'];
 
-    Excel::create('Filename', function ($excel) use ($gob_reg) {
-      $excel->sheet('First sheet', function ($sheet) use ($gob_reg) {
-        // Tamaño Fila y Columna
-        $sheet->setBorder('B4:C4', PHPExcel_Style_Border::BORDER_THICK, PHPExcel_Style_Border::BORDER_THICK, PHPExcel_Style_Border::BORDER_THICK);
-        $anio = date('Y');
-        $sheet->setWidth(array(
-          'A'     =>  5.86,
-          'B'     =>  45,
-          'C'     =>  17,
-          'D'     =>  12,
-          'E'     =>  17,
-          'F'     =>  17,
-          'G'     =>  17,
-          'H'     =>  17,
-          'I'     =>  17,
-          'J'     =>  17,
-          'K'     =>  17,
-          'L'     =>  17,
-          'M'     =>  11,
-          'N'     =>  11
-        ));
-        $sheet->setHeight(array(
-          1     =>  25.50,
-          2     =>  9.75,
-          3     =>  40
-        ));
-        $sheet->mergeCells('A1:N1');
-        $sheet->cell('A1', function ($cell) {
-          $cell->setValue('PROYECTOS DE INVERSIÓN PUBLICA DEL GOBIERNO REGIONAL DE LIMA - POR UNIDAD EJECUTORA');
-          $cell->setFont(array(
-            'family'     => 'Calibri',
-            'size'       => '14',
-            'bold'       =>  true
-          ));
-          $cell->setAlignment('center');
-          $cell->setValignment('center');
-          $cell->setBorder(PHPExcel_Style_Border::BORDER_THICK, PHPExcel_Style_Border::BORDER_THICK, PHPExcel_Style_Border::BORDER_THICK, PHPExcel_Style_Border::BORDER_THICK);
-        });
-        $sheet->row(3, array(
-          'N°',
-          'UNIDAD EJECUTORA',
-          'MONTO INV. ACT.',
-          'DEVEN. ACUM. ACT.',
-          'AVANCE ACUM. ACT.',
-          'PIA ' . $anio,
-          'PIM ' . $anio,
-          'CERTIF ' . $anio,
-          'COMP. ANUAL ' . $anio,
-          'COMP. MENSUAL ' . $anio,
-          'DEVENGADO ' . $anio,
-          'GIRADO ' . $anio,
-          'AVANCE ' . $anio,
-          'AVANCE FISICO'
-        ));
-        $sheet->cells('A3:N3', function ($cells) {
-          $cells->setBackground('#9BC2E6');
-          $cells->setFont(array(
-            'family'     => 'Calibri',
-            'size'       => '11',
-            'bold'       =>  true
-          ));
-        });
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+    $sheet->setTitle('First sheet');
 
-        $sheet->mergeCells('A2:N2');
-        $sheet->cell('A2', function ($cell) {
-          $cell->setValue('');
-        });
-        $fila_inicio = 3;
-        $total_fila = count($gob_reg) + $fila_inicio;
-        foreach ($gob_reg as $key => $value) {
-          $fila = $key + $fila_inicio;
-          if ($value->ger_direc != "UE SEDE") {
-            $sheet->setHeight($fila, 40);
-            $sheet->row($fila, array(
-              $value->cant_proyectos,
-              $value->ger_direc,
-              $value->m_pip,
-              $value->dev_dia,
-              round(($value->m_pip = 0 ?  0 : $value->dev_dia / $value->m_pip), 2),
-              $value->pia_dia,
-              $value->pim_dia,
+    $anio = date('Y');
+    $sheet->mergeCells('A1:N1');
+    $sheet->setCellValue('A1', 'PROYECTOS DE INVERSION PUBLICA DEL GOBIERNO REGIONAL DE LIMA - POR UNIDAD EJECUTORA');
+    $sheet->getStyle('A1:N1')->getFont()->setBold(true)->setSize(14);
+    $sheet->getStyle('A1:N1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER)->setVertical(Alignment::VERTICAL_CENTER);
+    $sheet->getStyle('A1:N1')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('FFFFFF');
 
-            ));
-          }
-        }
-        $sheet->setHeight($total_fila, 28);
+    $headers = [
+      'N°',
+      'UNIDAD EJECUTORA',
+      'MONTO INV. ACT.',
+      'DEVEN. ACUM. ACT.',
+      'AVANCE ACUM. ACT.',
+      'PIA ' . $anio,
+      'PIM ' . $anio,
+      'CERTIF ' . $anio,
+      'COMP. ANUAL ' . $anio,
+      'COMP. MENSUAL ' . $anio,
+      'DEVENGADO ' . $anio,
+      'GIRADO ' . $anio,
+      'AVANCE ' . $anio,
+      'AVANCE FISICO',
+    ];
+    $sheet->fromArray($headers, null, 'A3');
+    $sheet->getStyle('A3:N3')->getFont()->setBold(true)->setSize(11);
+    $sheet->getStyle('A3:N3')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('9BC2E6');
+    $sheet->getStyle('A3:N3')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER)->setVertical(Alignment::VERTICAL_CENTER);
 
-        // Bordes y Centrado
-        $sheet->cells('A3:N' . $total_fila, function ($cells) {
-          $cells->setValignment('center');
-        });
-      });
-    })->export('xlsx');
+    $columnWidths = [
+      'A' => 5.86,
+      'B' => 45,
+      'C' => 17,
+      'D' => 12,
+      'E' => 17,
+      'F' => 17,
+      'G' => 17,
+      'H' => 17,
+      'I' => 17,
+      'J' => 17,
+      'K' => 17,
+      'L' => 17,
+      'M' => 11,
+      'N' => 11,
+    ];
+    foreach ($columnWidths as $col => $width) {
+      $sheet->getColumnDimension($col)->setWidth($width);
+    }
+    $sheet->getRowDimension(1)->setRowHeight(25.50);
+    $sheet->getRowDimension(2)->setRowHeight(9.75);
+    $sheet->getRowDimension(3)->setRowHeight(40);
+
+    $fila = 4;
+    foreach ($gob_reg as $value) {
+      if ($value->ger_direc == "UE SEDE") {
+        continue;
+      }
+      $avanceAcum = ($value->m_pip == 0 || $value->m_pip === null) ? 0 : round($value->dev_dia / $value->m_pip, 2);
+      $sheet->fromArray([
+        $value->cant_proyectos,
+        $value->ger_direc,
+        $value->m_pip,
+        $value->dev_dia,
+        $avanceAcum,
+        $value->pia_dia,
+        $value->pim_dia,
+      ], null, 'A' . $fila);
+      $sheet->getRowDimension($fila)->setRowHeight(40);
+      $fila++;
+    }
+
+    $totalFila = max(4, $fila - 1);
+    $sheet->getStyle('A3:N' . $totalFila)->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+    $sheet->getStyle('C4:G' . $totalFila)->getNumberFormat()->setFormatCode('#,##0.00');
+
+    $filename = 'Filename.xlsx';
+    $tempFile = tempnam(sys_get_temp_dir(), 'xlsx_');
+    $writer = new Xlsx($spreadsheet);
+    $writer->save($tempFile);
+
+    return response()->download($tempFile, $filename)->deleteFileAfterSend(true);
   }
   public function table_mes_financiera(Request $request)
   {
