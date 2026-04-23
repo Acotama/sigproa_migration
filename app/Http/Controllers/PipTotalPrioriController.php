@@ -521,6 +521,7 @@ class PipTotalPrioriController extends Controller {
 
         $Alcance = DB::select("select * from grli_proyecto_ubicacion where idpi = " . $id );
 
+        $PMultianual = [];
         //$PMultianual = DB::select("select * from grli_pip_total_priori_pmultianual_year my inner join grli_pip_total_priori_pmultianual m ON m.id::int = my.idpmultianual::int where my.idproyecto::int = " . $id );
 
         $depCombo = Departamento::all()->pluck('nom_dpto', 'cod_dpto');
@@ -560,6 +561,7 @@ class PipTotalPrioriController extends Controller {
         $Obras = Obras::where('idproyecto','=', $id)->where('estado','1')->get();
 
         $Alcance = DB::select("select * from grli_proyecto_ubicacion where idpi = " . $id );
+        $UltimoEstado = $EtaSubProyecto;
 
         $ejecucionComplete = false;
 
