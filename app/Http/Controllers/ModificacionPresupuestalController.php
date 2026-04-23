@@ -10,6 +10,8 @@ use sayhuite\PipTotalPriori;
 use GuzzleHttp\Client;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ModificacionPresupuestalController extends Controller
 {
@@ -728,6 +730,9 @@ class ModificacionPresupuestalController extends Controller
                 array_push($cui,$value);
             }
         }
+
+        // Exportación simplificada para compatibilidad Laravel 6 sin maatwebsite/excel 2.x
+        return $this->exportarModificacionSimple($data1, $data2, $cui);
 
         //Recorrer Filas Horizontal Habilitador
         // $data1 = array(
@@ -2851,6 +2856,62 @@ class ModificacionPresupuestalController extends Controller
         $object = json_encode($array);
         $object1 = json_decode($object);
         return $object1;
+    }
+
+    private function exportarModificacionSimple(array $data1, array $data2, array $cui)
+    {
+        $spreadsheet = new Spreadsheet();
+
+        $sheet1 = $spreadsheet->getActiveSheet();
+        $sheet1->setTitle('Anulacion');
+        $sheet1->fromArray([[
+            'ue', 'cui', 'nombre_proyecto', 'monto_total', 'devengado', 'saldo_ejec', 'anulacion'
+        ]], null, 'A1');
+        $row = 2;
+        foreach ($data1 as $item) {
+            $sheet1->fromArray([[
+                isset($item[0]) ? $item[0] : '',
+                isset($item[1]) ? $item[1] : '',
+                isset($item[2]) ? $item[2] : '',
+                isset($item[3]) ? $item[3] : '',
+                isset($item[5]) ? $item[5] : '',
+                isset($item[7]) ? $item[7] : '',
+                isset($item[14]) ? $item[14] : '',
+            ]], null, 'A' . $row);
+            $row++;
+        }
+
+        $sheet2 = $spreadsheet->createSheet();
+        $sheet2->setTitle('Credito');
+        $sheet2->fromArray([[
+            'ue', 'cui', 'nombre_proyecto', 'monto_total', 'devengado', 'saldo_ejec', 'credito'
+        ]], null, 'A1');
+        $row = 2;
+        foreach ($data2 as $item) {
+            $sheet2->fromArray([[
+                isset($item[0]) ? $item[0] : '',
+                isset($item[1]) ? $item[1] : '',
+                isset($item[2]) ? $item[2] : '',
+                isset($item[3]) ? $item[3] : '',
+                isset($item[5]) ? $item[5] : '',
+                isset($item[7]) ? $item[7] : '',
+                isset($item[14]) ? $item[14] : '',
+            ]], null, 'A' . $row);
+            $row++;
+        }
+
+        foreach ([$sheet1, $sheet2] as $sheet) {
+            foreach (range('A', 'G') as $col) {
+                $sheet->getColumnDimension($col)->setAutoSize(true);
+            }
+        }
+
+        $nombreArchivo = 'MOD_ART13_' . implode('-', $cui) . '.xlsx';
+        $tempFile = tempnam(sys_get_temp_dir(), 'xlsx_');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($tempFile);
+
+        return response()->download($tempFile, $nombreArchivo)->deleteFileAfterSend(true);
     }
 
     private function loadSheetRowsWithHeading($path, $sheetName, $headingRow)

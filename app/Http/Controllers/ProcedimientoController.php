@@ -4,9 +4,12 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use Excel;
 use sayhuite\ProcedimientoSeleccion;
 use Validator;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ProcedimientoController extends Controller
 {
@@ -225,8 +228,6 @@ class ProcedimientoController extends Controller
 
     public function exportar_excel(Request $request)
     {
-      $input=$request->all();
-      $header=[0=>"A",1=>"B",2=>"C",3=>"D",4=>"E",5=>"F",6=>"G",7=>"H",8=>"I",9=>"J",10=>"K",11=>"L",12=>"M",13=>"N",14=>"O",15=>"P",16=>"Q",17=>"R",18=>"S",19=>"T",20=>"U",21=>"V",22=>"W",23=>"X",24=>"Y",25=>"Z",26=>"AA",27=>"AB",28=>"AC",29=>"AD",30=>"AE",31=>"AF"];
       $columna = 
         [ 
           0 => "NOMENCLATURA DEL PROCEDIMIENTO DE SELECCIÓN",
@@ -264,36 +265,43 @@ class ProcedimientoController extends Controller
         ];
       $campo_tabla = [0=>"nom_pro_seleccion",1=>"cod_unif",2=>"norma_aplicable",3=>"objeto_contratacion",4=>"requerimiento_documento",5=>"requerimiento_fecha",6=>"certificacion_documento",7=>"certificacion_fecha",8=>"aprob_exp_documento",9=>"aprob_exp_fecha",10=>"com_sel_documento",11=>"com_sel_fecha",12=>"com_sel_miembros",13=>"aprob_bases_documento",14=>"aprob_bases_fecha",15=>"fecha_convocatoria",16=>"tipo_proc_selec",17=>"num_proc_selec",18=>"valor_ref_est",19=>"estado",20=>"estado_fecha",21=>"estado_obs",22=>"buena_pro_est_fecha",23=>"buena_pro_fecha_real",24=>"buena_pro_obs",25=>"prov_adjudicado",26=>"valor_adjudicado",27=>"cont_documento",28=>"cont_monto",29=>"cont_fecha",30=>"ano",31=>"fech_act"];
       $data =  ProcedimientoSeleccion::select('nom_pro_seleccion','cod_unif','norma_aplicable','objeto_contratacion','requerimiento_documento','requerimiento_fecha','certificacion_documento','certificacion_fecha','aprob_exp_documento','aprob_exp_fecha','com_sel_documento','com_sel_fecha','com_sel_miembros','aprob_bases_documento','aprob_bases_fecha','fecha_convocatoria','tipo_proc_selec','num_proc_selec','valor_ref_est','estado','estado_fecha','estado_obs','buena_pro_est_fecha','buena_pro_fecha_real','buena_pro_obs','prov_adjudicado','valor_adjudicado','cont_documento','cont_monto','cont_fecha','ano','fech_act')->orderBy("id_procedimiento_seleccion")->where('estado_borrado','!=',0)->get();
-        Excel::create('Procedimientos', function ($excel) use ($data,$columna,$header,$campo_tabla) {
-            $excel->sheet('Procedimientos', function ($sheet) use ($data,$columna,$header,$campo_tabla) {
-              $sheet->getStyle('A')->getAlignment()->setWrapText(true);
-              $sheet->setHeight(1, 20);
-              // $sheet->setBorder('A1:AG1', 'thin');
-              foreach ($columna as $key => $column) {
-                $sheet->cell($header[$key].'1', function($cell) use ($column,$key){
-                  $cell->setBorder('thin','thin','thin','thin');
-                  $cell->setBackground('#87b8e2');
-                  $cell->setAlignment('center');
-                  $cell->setFontWeight('bold');
-                  $cell->setFontSize(12);
-                  $cell->setValignment('center');
-                  $cell->setValue($column);
-                });
-              }       
-              foreach ($data as $key => $datas) {
-                foreach ($header as $indice => $head) {
-                  $sheet->cell($header[$indice].($key+2), function($cell) use ($datas,$key,$campo_tabla,$indice,$head) {
-                    if ($head=='A') {
-                      $cell->setAlignment('left');
-                    }else{
-                      $cell->setAlignment('center');
-                    }
-                    $cell->setValignment('center');
-                    $cell->setValue($datas[$campo_tabla[$indice]]);
-                  });  
-                }                
-              }
-            })->download('xls');
-        });
+
+      $spreadsheet = new Spreadsheet();
+      $sheet = $spreadsheet->getActiveSheet();
+      $sheet->setTitle('Procedimientos');
+
+      $sheet->fromArray(array_values($columna), null, 'A1');
+      $sheet->getStyle('A1:AF1')->getFont()->setBold(true)->setSize(12);
+      $sheet->getStyle('A1:AF1')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER)->setVertical(Alignment::VERTICAL_CENTER);
+      $sheet->getStyle('A1:AF1')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('87B8E2');
+      $sheet->getRowDimension(1)->setRowHeight(20);
+
+      $rowNumber = 2;
+      foreach ($data as $item) {
+        $row = [];
+        foreach ($campo_tabla as $key) {
+          $row[] = isset($item[$key]) ? $item[$key] : '';
+        }
+        $sheet->fromArray($row, null, 'A' . $rowNumber);
+        $rowNumber++;
+      }
+
+      $lastRow = max(2, $rowNumber - 1);
+      $sheet->getStyle('A2:A' . $lastRow)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+      $sheet->getStyle('B2:AF' . $lastRow)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+      $sheet->getStyle('A1:AF' . $lastRow)->getAlignment()->setVertical(Alignment::VERTICAL_CENTER)->setWrapText(true);
+
+      foreach (range('A', 'Z') as $col) {
+        $sheet->getColumnDimension($col)->setAutoSize(true);
+      }
+      foreach (range('A', 'F') as $col) {
+        $sheet->getColumnDimension('A' . $col)->setAutoSize(true);
+      }
+
+      $tempFile = tempnam(sys_get_temp_dir(), 'xlsx_');
+      $writer = new Xlsx($spreadsheet);
+      $writer->save($tempFile);
+
+      return response()->download($tempFile, 'Procedimientos.xlsx')->deleteFileAfterSend(true);
     }
 }

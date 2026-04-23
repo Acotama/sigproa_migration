@@ -17,7 +17,9 @@ use sayhuite\Usuario;
 use sayhuite\ActividadOperativa;
 use Auth;
 use Datetime;
-use Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 
 class Educacion
 {
@@ -439,13 +441,21 @@ class Educacion
         $tTaller = $Taller->get()->toArray();
         $tTaller= json_decode( json_encode($tTaller), true);
 
-        return Excel::create('Sayhuite', function($excel) use ($tTaller) {
-            $excel->sheet('Sayhuite', function($sheet) use ($tTaller)
-                {
-                    $sheet->fromArray($tTaller);
-                    $sheet->setOrientation('landscape');
-                });
-        })->download('xlsx');
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Sayhuite');
+        $sheet->fromArray($tTaller, null, 'A1');
+        $sheet->getPageSetup()->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
+
+        foreach (range('A', 'Z') as $col) {
+            $sheet->getColumnDimension($col)->setAutoSize(true);
+        }
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'xlsx_');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($tempFile);
+
+        return response()->download($tempFile, 'Sayhuite.xlsx')->deleteFileAfterSend(true);
     }
 
     function defineState($data){
