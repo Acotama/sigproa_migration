@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AulasPrefabricadas extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'grli_aulas_prefabricadas';
     protected $primaryKey = 'id';

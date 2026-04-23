@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MantRios extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'grli_mantenimiento_rios';
     protected $primaryKey = 'id';

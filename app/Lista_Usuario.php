@@ -11,7 +11,6 @@ class Lista_Usuario extends Authenticatable {
     //use Notifiable;
     use EntrustUserTrait;
 
-    use \OwenIt\Auditing\Auditable;
 
     protected $dontKeepAuditOf = ['_token'];
     /**

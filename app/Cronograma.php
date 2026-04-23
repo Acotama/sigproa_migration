@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cronograma extends Model
 {
-     use \OwenIt\Auditing\Auditable;
 
     protected $table = 'grli_pip_cronograma';
     protected $primaryKey = 'id';

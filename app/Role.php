@@ -7,6 +7,5 @@ use Zizaco\Entrust\EntrustRole;
 
 class Role extends EntrustRole
 {
-    use \OwenIt\Auditing\Auditable;
 
 }

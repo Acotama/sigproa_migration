@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UsuarioObra extends Model
 {    
-    use \OwenIt\Auditing\Auditable;
     
     /**
      * The database table used by the model.

@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class AtencionUsuario extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'poi_salud_atencion_usuario';
     protected $primaryKey = 'id';

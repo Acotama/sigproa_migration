@@ -7,7 +7,6 @@ use sayhuite\PiptotalPriori;
 
 class ObrasEstado extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     public static $auditCustomMessage = '{user.apellidos}, {user.nombre} {auditable_reg.nom_proyec} {elapsed_time}';
 

@@ -181,7 +181,7 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         // Sofa\Eloquence\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        OwenIt\Auditing\AuditingServiceProvider::class,
+        // OwenIt\Auditing\AuditingServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
     ],

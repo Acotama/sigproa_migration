@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MantCanales extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'grli_canales_nuevo';
     protected $primaryKey = 'id';

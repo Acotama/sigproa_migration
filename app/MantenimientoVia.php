@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MantenimientoVia extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'grli_mantenimiento_via';
     protected $primaryKey = 'id';

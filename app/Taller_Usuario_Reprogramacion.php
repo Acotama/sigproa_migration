@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Taller_Usuario_Reprogramacion extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'poi_taller_usuario_reprogramacion';
     protected $primaryKey = 'id';

@@ -8,7 +8,6 @@ use sayhuite\Taller_Img;
 
 class Taller_Usuario extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'poi_taller_usuario';
     protected $primaryKey = 'id';

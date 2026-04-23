@@ -30,9 +30,7 @@ Route::get('/', 'HomeController@index');
 });*/
 
 
-Route::get('/testing', function () {
-    return view('test.test');
-});
+Route::view('/testing', 'test.test');
 
 
 

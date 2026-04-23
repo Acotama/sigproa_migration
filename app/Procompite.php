@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Procompite extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'grli_pip_procompite';
     protected $primaryKey = 'id';

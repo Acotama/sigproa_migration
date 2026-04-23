@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Taller_Img extends Model
 {
-    use \OwenIt\Auditing\Auditable;
 
     protected $table = 'poi_taller_img';
     protected $primaryKey = 'id';
