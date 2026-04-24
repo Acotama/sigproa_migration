@@ -997,7 +997,7 @@
                 },
             },
             errorElement: 'span',
-            debug: true,
+            debug: false,
             errorPlacement: function (error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
@@ -1104,7 +1104,7 @@
                 },
             },
             errorElement: 'span',
-            debug: true,
+            debug: false,
             errorPlacement: function (error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
@@ -1185,7 +1185,7 @@
                 },
             },
             errorElement: 'span',
-            debug: true,
+            debug: false,
             errorPlacement: function (error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
@@ -1300,7 +1300,7 @@
                 // },
             },
             errorElement: 'span',
-            debug: true,
+            debug: false,
             errorPlacement: function (error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
@@ -1405,7 +1405,7 @@
                 }
             },
             errorElement: 'span',
-            debug: true,
+            debug: false,
             errorPlacement: function (error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);

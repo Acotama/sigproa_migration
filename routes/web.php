@@ -88,18 +88,11 @@ Route::group(['prefix' => '/apimef'], function () {
     Route::get('/formato08/{id}', 'ApiMefController@formato08');
 });
 
-Route::group(['prefix' => '/test'], function () {
-    Route::get('/', 'TestController@index');
-    Route::get('/urls', 'TestController@urls');
-});
-
 Route::group(array('middleware' => 'auth'), function () {
 
     // if(env('APP_ENV') == 'production'){
     //     URL::forceSchema('https');
     // }
-    Route::post('/meta_mef/insert', 'TestController@insertMetaData');
-
     Route::get('inicio', 'HomeController@inicio');
     Route::get('logout', 'HomeController@logOut');
     Route::post('actualizar', 'HomeController@actualizarAcceso');

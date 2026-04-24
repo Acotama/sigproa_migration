@@ -37,12 +37,13 @@ class InfFinanciera extends Model
 
 
     function getFinancXyear($cod_unif, $year_ini, $year_fin = null){
-        if(is_null($year_fin) or empty($year_fin)){
-            $result = $this::all();
-            dd($result);
-        } else {
+        $query = $this::where('cod_unif', $cod_unif);
 
+        if (is_null($year_fin) || empty($year_fin)) {
+            return $query->where('anio_financ', $year_ini)->get();
         }
+
+        return $query->whereBetween('anio_financ', [$year_ini, $year_fin])->get();
     }
 
 }

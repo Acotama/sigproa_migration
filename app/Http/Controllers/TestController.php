@@ -85,7 +85,7 @@ class TestController extends Controller
         ]);
 
         // dd($response->getBody());
-        dd(json_decode($response->getBody(), true));
+        return response()->json(json_decode($response->getBody(), true));
         
     }
 

@@ -276,7 +276,11 @@ class ObrasEstadoController extends Controller
         $mime = File::mimeType($input['file'][0]);
         
         if(strstr($mime, "video/")){
-            dd("video");
+            return Response([
+                'error' => true,
+                'message' => ['No se admite carga de video en este módulo'],
+                'code' => 422
+            ], 422);
         }else if(strstr($mime, "image/")){
             //>>>>>>>>>>>>>>>>>>>>>> IMAGE
             DB::beginTransaction();
