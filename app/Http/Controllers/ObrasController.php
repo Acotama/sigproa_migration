@@ -3,16 +3,16 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\Obras;
-use sayhuite\ObrasEstado;
+use sayhuite\Models\Obras;
+use sayhuite\Models\ObrasEstado;
 use Illuminate\Support\Facades\Auth;
-use sayhuite\Dependencia;
-use sayhuite\PipTotalPriori;
-use sayhuite\UsuarioObra;
-use sayhuite\Usuario;
-use sayhuite\PipTotalPrioriImage;
+use sayhuite\Models\Dependencia;
+use sayhuite\Models\PipTotalPriori;
+use sayhuite\Models\UsuarioObra;
+use sayhuite\Models\Usuario;
+use sayhuite\Models\PipTotalPrioriImage;
 
-use sayhuite\SubEtapa;
+use sayhuite\Models\SubEtapa;
 use Validator;
 use DB;
 use Response;

@@ -5,7 +5,7 @@ namespace sayhuite\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Excel;
-use sayhuite\ContratacionesPS;
+use sayhuite\Models\ContratacionesPS;
 
 class ContratacionesController extends Controller
 {

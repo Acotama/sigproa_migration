@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => sayhuite\Usuario::class,
+            'model' => sayhuite\Models\Usuario::class,
         ],
 
         // 'users' => [

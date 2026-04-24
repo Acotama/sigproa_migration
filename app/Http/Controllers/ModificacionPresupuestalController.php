@@ -5,7 +5,7 @@ namespace sayhuite\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use DateTime;
-use sayhuite\PipTotalPriori;
+use sayhuite\Models\PipTotalPriori;
 use GuzzleHttp\Client;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;

@@ -3,9 +3,9 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\Distrito;
+use sayhuite\Models\Distrito;
 use DB;
-use sayhuite\Usuario;
+use sayhuite\Models\Usuario;
 
 class UbigeoController extends Controller
 {

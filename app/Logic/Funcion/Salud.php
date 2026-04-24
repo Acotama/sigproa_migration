@@ -10,7 +10,7 @@ use Intervention\Image\ImageManager;
 //use sayhuite\Models\Image;
 use Mockery\CountValidator\Exception;
 
-use sayhuite\AtencionUsuario;
+use sayhuite\Models\AtencionUsuario;
 use Illuminate\Support\Facades\DB;
 use Auth;
 

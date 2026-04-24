@@ -3,11 +3,11 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\PipTotalPriori;
+use sayhuite\Models\PipTotalPriori;
 use Illuminate\Support\Facades\DB;
 use Response;
 use Faker\Provider\DateTime;
-use sayhuite\Taller_Usuario;
+use sayhuite\Models\Taller_Usuario;
 use Illuminate\View\View;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;

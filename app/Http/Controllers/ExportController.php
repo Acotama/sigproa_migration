@@ -3,8 +3,8 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\PipTotalPriori;
-use sayhuite\MantenimientoVia;
+use sayhuite\Models\PipTotalPriori;
+use sayhuite\Models\MantenimientoVia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\Chart\Chart;

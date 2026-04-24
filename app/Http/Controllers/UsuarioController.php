@@ -2,9 +2,9 @@
 
 namespace sayhuite\Http\Controllers;
 
-use sayhuite\Usuario;
-use sayhuite\Rol;
-use sayhuite\Dependencia;
+use sayhuite\Models\Usuario;
+use sayhuite\Models\Role;
+use sayhuite\Models\Dependencia;
 use sayhuite\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,9 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
-use sayhuite\role;
-use sayhuite\Actividad;
-use sayhuite\Lista_Usuario;
+use sayhuite\Models\Lista_Usuario;
 
 class UsuarioController extends Controller {
 

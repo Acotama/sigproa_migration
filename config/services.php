@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => sayhuite\User::class,
+        'model' => sayhuite\Models\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

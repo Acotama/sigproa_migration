@@ -1,6 +1,6 @@
 <?php
 
-namespace sayhuite;
+namespace sayhuite\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

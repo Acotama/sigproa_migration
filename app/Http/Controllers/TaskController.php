@@ -3,7 +3,7 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\Task;
+use sayhuite\Models\Task;
 
 class TaskController extends Controller
 {

@@ -4,9 +4,9 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use sayhuite\ejecucion_financiera;
-use sayhuite\InfFinanciera;
-use sayhuite\Obras;
+use sayhuite\Models\ejecucion_financiera;
+use sayhuite\Models\InfFinanciera;
+use sayhuite\Models\Obras;
 use Illuminate\Support\Facades\DB;
 use sayhuite\procedures\sp_Procedures;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

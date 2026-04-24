@@ -5,7 +5,7 @@ namespace sayhuite\Http\Controllers\siaf;
 use Illuminate\Http\Request;
 use sayhuite\Http\Controllers\Controller;
 // use sayhuite\siaf\db_siaf;
-use sayhuite\ejecucion_financiera;
+use sayhuite\Models\ejecucion_financiera;
 use DB;
 
 class SiafController extends Controller

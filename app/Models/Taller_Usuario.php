@@ -1,10 +1,10 @@
 <?php
 
-namespace sayhuite;
+namespace sayhuite\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use sayhuite\Taller_Img;
+use sayhuite\Models\Taller_Img;
 
 class Taller_Usuario extends Model
 {

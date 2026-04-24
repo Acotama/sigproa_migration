@@ -4,12 +4,12 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use View;
-use sayhuite\Cronograma;
-use sayhuite\PipTotalPriori;
-use sayhuite\Obras;
+use sayhuite\Models\Cronograma;
+use sayhuite\Models\PipTotalPriori;
+use sayhuite\Models\Obras;
 use Response;
-use sayhuite\Task;
-use sayhuite\Link;
+use sayhuite\Models\Task;
+use sayhuite\Models\Link;
 
 class CronogramaController extends Controller
 {

@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManager;
 //use sayhuite\Models\Image;
 use Mockery\CountValidator\Exception;
-use sayhuite\PipTotalPriori;
-use sayhuite\MantenimientoVia;
+use sayhuite\Models\PipTotalPriori;
+use sayhuite\Models\MantenimientoVia;
 use Illuminate\Support\Facades\DB;
 
 class ImageRepository

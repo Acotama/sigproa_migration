@@ -16,7 +16,7 @@ return new class extends Migration
 
             DB::table('role_user')
                 ->whereNull('user_type')
-                ->update(['user_type' => 'sayhuite\\Usuario']);
+                ->update(['user_type' => 'sayhuite\\Models\\Usuario']);
         }
 
         if (Schema::hasTable('permission_user') && !Schema::hasColumn('permission_user', 'user_type')) {
@@ -26,7 +26,7 @@ return new class extends Migration
 
             DB::table('permission_user')
                 ->whereNull('user_type')
-                ->update(['user_type' => 'sayhuite\\Usuario']);
+                ->update(['user_type' => 'sayhuite\\Models\\Usuario']);
         }
     }
 
@@ -45,4 +45,3 @@ return new class extends Migration
         }
     }
 };
-

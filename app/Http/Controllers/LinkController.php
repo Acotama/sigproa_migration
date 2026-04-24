@@ -3,7 +3,7 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\Link;
+use sayhuite\Models\Link;
 
 class LinkController extends Controller
 {

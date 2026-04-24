@@ -4,7 +4,7 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use sayhuite\ProcedimientoSeleccion;
+use sayhuite\Models\ProcedimientoSeleccion;
 use Validator;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;

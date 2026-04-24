@@ -3,10 +3,10 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\InfFinanciera;
+use sayhuite\Models\InfFinanciera;
 use DB;
-use sayhuite\PipTotalPriori;
-use sayhuite\Procompite;
+use sayhuite\Models\PipTotalPriori;
+use sayhuite\Models\Procompite;
 use Symfony\Component\HttpFoundation\Response;
 
 class InfFinancieraController extends Controller

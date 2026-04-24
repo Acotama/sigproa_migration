@@ -4,17 +4,17 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use sayhuite\ObrasEstado;
-use sayhuite\SubEtapa;
-use sayhuite\ObraEstadoImg;
+use sayhuite\Models\ObrasEstado;
+use sayhuite\Models\SubEtapa;
+use sayhuite\Models\ObraEstadoImg;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use sayhuite\Logic\Tools\Tools;
 use File;
 use sayhuite\Logic\Image\ImageRepository;
 use Validator;
-use sayhuite\PipTotalPriori;
-use sayhuite\Obras;
+use sayhuite\Models\PipTotalPriori;
+use sayhuite\Models\Obras;
 
 class ObrasEstadoController extends Controller
 {

@@ -5,7 +5,7 @@ namespace sayhuite\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Excel;
-use sayhuite\ejecucion_financiera;
+use sayhuite\Models\ejecucion_financiera;
 
 class CarteraPMIController extends Controller
 {

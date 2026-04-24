@@ -4,9 +4,9 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use sayhuite\Anulacion; 
-use sayhuite\Credito; 
-use sayhuite\Detalle_anu_cred; 
+use sayhuite\Models\Anulacion; 
+use sayhuite\Models\Credito; 
+use sayhuite\Models\Detalle_anu_cred; 
 use DateTime;
 use Excel;
 

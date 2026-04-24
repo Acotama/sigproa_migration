@@ -1,9 +1,9 @@
 <?php
 
-namespace sayhuite;
+namespace sayhuite\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use sayhuite\PiptotalPriori;
+use sayhuite\Models\PipTotalPriori;
 
 class ObrasEstado extends Model
 {

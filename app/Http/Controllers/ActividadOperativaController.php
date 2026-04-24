@@ -3,8 +3,8 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\ActividadOperativa;
-use sayhuite\CadenaFuncional;
+use sayhuite\Models\ActividadOperativa;
+use sayhuite\Models\CadenaFuncional;
 use DB;
 
 class ActividadOperativaController extends Controller

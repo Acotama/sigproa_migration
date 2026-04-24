@@ -10,11 +10,11 @@ use Intervention\Image\ImageManager;
 
 use Mockery\CountValidator\Exception;
 use Illuminate\Support\Facades\DB;
-use sayhuite\Taller_Usuario;
-use sayhuite\Taller_Usuario_Reprogramacion;
-use sayhuite\Taller_Img;
-use sayhuite\Usuario;
-use sayhuite\ActividadOperativa;
+use sayhuite\Models\Taller_Usuario;
+use sayhuite\Models\Taller_Usuario_Reprogramacion;
+use sayhuite\Models\Taller_Img;
+use sayhuite\Models\Usuario;
+use sayhuite\Models\ActividadOperativa;
 use Auth;
 use Datetime;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

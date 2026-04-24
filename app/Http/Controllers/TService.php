@@ -5,7 +5,7 @@ namespace sayhuite\Http\Controllers;
 use Illuminate\Http\Request;
 use sayhuite\Logic\Tools\requestTipoCambio;
 
-use sayhuite\Taller_Img;
+use sayhuite\Models\Taller_Img;
 use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Jenssegers\ImageHash\ImageHash;
 

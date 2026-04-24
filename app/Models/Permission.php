@@ -1,6 +1,6 @@
 <?php
 
-namespace sayhuite;
+namespace sayhuite\Models;
 
 use Laratrust\Models\Permission as LaratrustPermission;
 

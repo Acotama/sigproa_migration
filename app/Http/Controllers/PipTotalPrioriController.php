@@ -3,33 +3,33 @@
 namespace sayhuite\Http\Controllers;
 
 use Intervention\Image\Facades\Image;
-use sayhuite\PipTotalPriori;
-use sayhuite\Procompite;
-use sayhuite\Departamento;
-use sayhuite\Dependencia;
-use sayhuite\Provincia;
-use sayhuite\Distrito;
-use sayhuite\SubEtapa;
-use sayhuite\EstAntig;
+use sayhuite\Models\PipTotalPriori;
+use sayhuite\Models\Procompite;
+use sayhuite\Models\Departamento;
+use sayhuite\Models\Dependencia;
+use sayhuite\Models\Provincia;
+use sayhuite\Models\Distrito;
+use sayhuite\Models\SubEtapa;
+use sayhuite\Models\EstAntig;
 use sayhuite\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use sayhuite\InfFinanciera;
+use sayhuite\Models\InfFinanciera;
 use DB;
 use PDF;
 use File;
 use sayhuite\Logic\Image\ImageRepository;
 use sayhuite\Logic\Tools\Tools;
 use sayhuite\Logic\Pdf\PdfRepository;
-use sayhuite\audits;
-use sayhuite\Obras;
-use sayhuite\ObrasEstado;
-use sayhuite\PipTotalPrioriEstado;
-use sayhuite\PipTotalPrioriImage;
-use sayhuite\ContratacionesPS;
+use sayhuite\Models\audits;
+use sayhuite\Models\Obras;
+use sayhuite\Models\ObrasEstado;
+use sayhuite\Models\PipTotalPrioriEstado;
+use sayhuite\Models\PipTotalPrioriImage;
+use sayhuite\Models\ContratacionesPS;
 
 class PipTotalPrioriController extends Controller {
 

@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(sayhuite\User::class, function (Faker\Generator $faker) {
+$factory->define(sayhuite\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [

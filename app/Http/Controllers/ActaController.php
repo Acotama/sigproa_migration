@@ -3,9 +3,9 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\ActaSeguimiento;
-use sayhuite\ActaAcuerdoSeguimiento;
-use sayhuite\PipTotalPriori;
+use sayhuite\Models\ActaSeguimiento;
+use sayhuite\Models\ActaAcuerdoSeguimiento;
+use sayhuite\Models\PipTotalPriori;
 use DB;
 
 class ActaController extends Controller

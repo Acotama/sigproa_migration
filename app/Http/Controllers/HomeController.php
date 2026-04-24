@@ -2,10 +2,10 @@
 
 namespace sayhuite\Http\Controllers;
 
-use sayhuite\Usuario;
-use sayhuite\Acceso;
-use sayhuite\Dependencia;
-use sayhuite\Rol;
+use sayhuite\Models\Usuario;
+use sayhuite\Models\Acceso;
+use sayhuite\Models\Dependencia;
+use sayhuite\Models\Rol;
 use sayhuite\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

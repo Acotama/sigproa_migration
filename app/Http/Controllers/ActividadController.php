@@ -4,8 +4,8 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use sayhuite\Actividad;
-use sayhuite\Usuario;
+use sayhuite\Models\Actividad;
+use sayhuite\Models\Usuario;
 
 class ActividadController extends Controller
 {

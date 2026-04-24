@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 //use Intervention\Image\ImageManager;
 //use sayhuite\Models\Image;
-use sayhuite\PipTotalPriori;
+use sayhuite\Models\PipTotalPriori;
 use Illuminate\Support\Facades\DB;
 
 class PdfRepository

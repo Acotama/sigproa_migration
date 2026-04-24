@@ -2,7 +2,7 @@
 
 namespace sayhuite\Http\Controllers\Auth;
 
-use sayhuite\User;
+use sayhuite\Models\User;
 use sayhuite\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;

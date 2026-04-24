@@ -3,7 +3,7 @@
 namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
-use sayhuite\InfFinanciera;
+use sayhuite\Models\InfFinanciera;
 use sayhuite\procedures\sp_Procedures;
 use DB;
 

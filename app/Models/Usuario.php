@@ -1,6 +1,6 @@
 <?php
 
-namespace sayhuite;
+namespace sayhuite\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -132,6 +132,6 @@ class Usuario extends Authenticatable implements LaratrustUser
 
     public function unidad()
     {
-        return $this->belongsToMany('sayhuite\Dependencia', 'usuario_dependencia', 'idusuario', 'iddependencia');
+        return $this->belongsToMany('sayhuite\Models\Dependencia', 'usuario_dependencia', 'idusuario', 'iddependencia');
     }
 }

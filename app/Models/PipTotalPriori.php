@@ -1,6 +1,6 @@
 <?php
 
-namespace sayhuite;
+namespace sayhuite\Models;
 
 use Illuminate\Database\Eloquent\Model;
 // use Sofa\Eloquence\Eloquence;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 // use Sofa\Eloquence\Mappable;
 use DateTime;
 use DB;
-use sayhuite\PipTotalPrioriImage;
+use sayhuite\Models\PipTotalPrioriImage;
 
 class PipTotalPriori extends Model {
 

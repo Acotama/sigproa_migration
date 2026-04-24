@@ -4,8 +4,8 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use sayhuite\Http\Controllers\Controller;
-use sayhuite\Role;
-use sayhuite\Permission;
+use sayhuite\Models\Role;
+use sayhuite\Models\Permission;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller

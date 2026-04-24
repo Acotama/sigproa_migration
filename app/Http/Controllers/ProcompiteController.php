@@ -5,15 +5,15 @@ namespace sayhuite\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Response;
-use sayhuite\PipTotalPriori;
-use sayhuite\Departamento;
-use sayhuite\Dependencia;
-use sayhuite\Procompite;
-use sayhuite\Provincia;
-use sayhuite\Distrito;
-use sayhuite\SubEtapa;
-use sayhuite\EstAntig;
-use sayhuite\MantenimientoVia;
+use sayhuite\Models\PipTotalPriori;
+use sayhuite\Models\Departamento;
+use sayhuite\Models\Dependencia;
+use sayhuite\Models\Procompite;
+use sayhuite\Models\Provincia;
+use sayhuite\Models\Distrito;
+use sayhuite\Models\SubEtapa;
+use sayhuite\Models\EstAntig;
+use sayhuite\Models\MantenimientoVia;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;

@@ -5,11 +5,11 @@ namespace sayhuite\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use DateTime;
-use sayhuite\PipTotalPriori;
+use sayhuite\Models\PipTotalPriori;
 use sayhuite\Http\Controllers\ModificacionPresupuestalController;
 use Goutte\Client;
 use Symfony\Component\HttpClient\HttpClient;
-use sayhuite\IndicadorBrechas;
+use sayhuite\Models\IndicadorBrechas;
 
 class NoPrevistasController extends Controller
 {

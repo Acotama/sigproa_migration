@@ -104,8 +104,8 @@ return [
     |
     */
     'user_models' => [
-        'users' => 'sayhuite\\Usuario',
-        'lista_usuarios' => 'sayhuite\\Lista_Usuario',
+        'users' => 'sayhuite\\Models\\Usuario',
+        'lista_usuarios' => 'sayhuite\\Models\\Lista_Usuario',
     ],
 
     /*
@@ -122,12 +122,12 @@ return [
         /**
          * Role model
          */
-        'role' => 'sayhuite\\Role',
+        'role' => 'sayhuite\\Models\\Role',
 
         /**
          * Permission model
          */
-        'permission' => 'sayhuite\\Permission',
+        'permission' => 'sayhuite\\Models\\Permission',
 
         /**
          * Team model
