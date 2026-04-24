@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Request as Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use DateTime;
@@ -62,18 +61,18 @@ class HomeController extends Controller {
             'username' => 'required|Exists:usuario,username',
             'password' => 'required'
         ];
-        $validator = Validator::make(Input::all(), $rules);
+        $validator = Validator::make(request()->all(), $rules);
 
         if ($validator->passes()) {
             $userdata = array(
-                'username' => Input::get('username'),
-                'password' => Input::get('password'),
+                'username' => request()->get('username'),
+                'password' => request()->get('password'),
                 'estado' => 1,
                 'activo' => 1,
                 'poi' => '0'
             );
 
-            if (Auth::attempt($userdata, Input::get('rememberme', 0))) {
+            if (Auth::attempt($userdata, request()->get('rememberme', 0))) {
                 //GUARDAR EL ACCESO
                 $this->registrarAcceso();
                 if( Auth::user()->poi == "1" ){
@@ -97,7 +96,7 @@ class HomeController extends Controller {
             }
         } else {
             $rules = ['username' => 'required|Exists:usuario,username'];
-            $validator = Validator::make(Input::all(), $rules);
+            $validator = Validator::make(request()->all(), $rules);
             if ($validator->passes())
                 return redirect('/login')->with('mensaje_error', 'La Contraseña no Valida')->withInput();
             else
@@ -185,7 +184,7 @@ class HomeController extends Controller {
 
     public function perfilUpdate($id) {
         $id = Auth::id();
-        $validator = Validator::make($data = Input::all(), Usuario::$rulesPerfil);
+        $validator = Validator::make($data = request()->all(), Usuario::$rulesPerfil);
         if ($validator->fails()) {
             $mensaje_error = '';
             $mensajes = $validator->messages();
@@ -221,7 +220,7 @@ class HomeController extends Controller {
             'password_new' => 'required',
             'password_confirm' => 'required'
         ];
-        $validator = Validator::make($data = Input::all(), $rules);
+        $validator = Validator::make($data = request()->all(), $rules);
 
         if ($validator->fails()) {
             $mensaje_error = '';
@@ -253,7 +252,7 @@ class HomeController extends Controller {
     }
 
     public function emailEnviar() {
-        $input = Input::all();
+        $input = request()->all();
         $usuario = Usuario::where('email', '=', $input['email'])->where('estado', '=', '1')->where('activo', '=', '1')->whereIn('idrol', array(1, 2, 3, 4))->get();
 
         if ($usuario->count()) {
@@ -287,7 +286,7 @@ class HomeController extends Controller {
 
     public function contactoCreate() {
 
-        $validator = Validator::make($data = Input::except('_token'), Contacto::$rules);
+        $validator = Validator::make($data = request()->except('_token'), Contacto::$rules);
 
         if ($validator->fails()) {
             $mensaje_error = '';

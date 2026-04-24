@@ -7,7 +7,6 @@ use Mockery\CountValidator\Exception;
 use sayhuite\Logic\Pdf\PdfRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Request as Input;
 use sayhuite\PipTotalPriori;
 
 //use sayhuite\Models\Image;
@@ -25,7 +24,7 @@ class PdfController extends Controller
     public function postUpload()
     {
 
-        $pdf = Input::all();
+        $pdf = request()->all();
         $response = $this->pdf->upload($pdf);
         return $response;
     }

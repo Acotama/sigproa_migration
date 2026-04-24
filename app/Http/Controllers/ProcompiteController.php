@@ -15,7 +15,6 @@ use sayhuite\SubEtapa;
 use sayhuite\EstAntig;
 use sayhuite\MantenimientoVia;
 
-use Illuminate\Support\Facades\Request as Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use File;
@@ -237,7 +236,7 @@ class ProcompiteController extends Controller
             return back();
         }
 
-        $validator = Validator::make($data = Input::except('_token', 'uid', 'file', 'tipo', 'fecha', 'csrf-token'), PipTotalPriori::$rules);
+        $validator = Validator::make($data = request()->except('_token', 'uid', 'file', 'tipo', 'fecha', 'csrf-token'), PipTotalPriori::$rules);
 
         if ($validator->fails()) {
             $mensaje_error = "";
@@ -307,7 +306,7 @@ class ProcompiteController extends Controller
         $input  = $request->all();
 
 
-        $cleanInput = Input::except('_token', 'uid', 'file', 'tipo', 'fecha', 'csrf-token');
+        $cleanInput = request()->except('_token', 'uid', 'file', 'tipo', 'fecha', 'csrf-token');
         $validator = Validator::make($data = $cleanInput, Procompite::$rules);
 
 
@@ -341,7 +340,7 @@ class ProcompiteController extends Controller
     }
 
     public function getSearchOpt(){
-        $param = Input::get('param');
+        $param = request()->get('param');
         $allowed = ['ger_direc', 'tipo_pry' , 'anio_ini_pry', 'etapa'];
         if(in_array($param,$allowed)){
             $Snipp = PipTotalPriori::select($param)->distinct()->orderBy($param,'desc')->get()->toArray();
@@ -398,7 +397,7 @@ class ProcompiteController extends Controller
     {
         $categoria = 'procompite';
 
-        $input = Input::all();
+        $input = request()->all();
         $Procompite = Procompite::where('id',$input['uid'])->first();
         $uid = $input['uid'];
 
@@ -627,7 +626,7 @@ class ProcompiteController extends Controller
             return back();
         }
 
-        $pdf = Input::all();
+        $pdf = request()->all();
         $response = $this->upload($pdf);
         return $response;
     }

@@ -384,13 +384,6 @@ Route::group(array('middleware' => 'auth'), function () {
         Route::post('/lista_proyecto_data', ['uses' => 'ProyectoController@lista_proyecto_data', 'middleware' => ['permission:pir-proyectoinversion']]);
     });
 
-    Route::group(['prefix' => '/prueba'], function () {
-        Route::get('/', ['uses' => 'PruebaController@inicio']);
-        Route::post('/guardar', ['uses' => 'PruebaController@guardar_actividadoperativa']);
-        Route::get('/datos', ['uses' => 'PruebaController@datos']);
-        Route::post('modal', ['uses' => 'PruebaController@modal_agregar', 'middleware' => ['permission:user-create']]);
-    });
-
     Route::group(['prefix' => '/actividad'], function () {
         Route::get('/', ['uses' => 'p_actividadController@inicio', 'middleware' => ['permission:pir-ejecucionfinanciera']]);
         Route::get('/datos', ['uses' => 'p_actividadController@datos', 'middleware' => ['permission:pir-ejecucionfinanciera']]);
@@ -526,9 +519,6 @@ Route::group(array('middleware' => 'auth'), function () {
         Route::post('/ejecucionmeta_uei_siaf', ['uses' => 'siaf\SiafController@ejecucionmeta_uei_siaf', 'middleware' => ['permission:pir-siaf']]);
         Route::post('/show', ['uses' => 'siaf\SiafController@show', 'middleware' => ['permission:pir-siaf']]);
     });
-
-    // routes/web.php
-    Route::get('/run-python', 'PythonController@run');
 
     // Metas (solo administrador)
     Route::group(['prefix' => '/metas', 'middleware' => ['role:admin']], function () {

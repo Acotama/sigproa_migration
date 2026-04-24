@@ -15,7 +15,6 @@ use sayhuite\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Validator;
-use Illuminate\Support\Facades\Request as Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use sayhuite\InfFinanciera;
@@ -605,7 +604,7 @@ class PipTotalPrioriController extends Controller {
     //actualizar datos
     public function update($id) {
 
-        $cleanInput = Input::except('_token', 'uid', 'file', 'tipo', 'fecha', 'csrf-token');
+        $cleanInput = request()->except('_token', 'uid', 'file', 'tipo', 'fecha', 'csrf-token');
         $validator = Validator::make($data = $cleanInput, PipTotalPriori::$rules);
 
         if ($validator->fails()) {
@@ -619,36 +618,36 @@ class PipTotalPrioriController extends Controller {
 
             $PipTotalPriori = PipTotalPriori::find($id);
 
-            if ( Input::get('etapa') != '' and Input::get('sub_etapa') != '' and Input::get('f_etapsub') != '1969-12-31' ){
+            if ( request()->get('etapa') != '' and request()->get('sub_etapa') != '' and request()->get('f_etapsub') != '1969-12-31' ){
 
-                Input::merge(['f_etapsub' => date("Y-m-d",strtotime(Input::get('f_etapsub')))]);
-                $PipTotalPrioriEstado = PipTotalPrioriEstado::where('fecha_act',Input::get('f_etapsub'))
+                request()->merge(['f_etapsub' => date("Y-m-d",strtotime(request()->get('f_etapsub')))]);
+                $PipTotalPrioriEstado = PipTotalPrioriEstado::where('fecha_act',request()->get('f_etapsub'))
                                         ->where('idproyecto', $id)
                                         ->first();
 
                 if ($PipTotalPrioriEstado){
 
-                    $PipTotalPrioriEstado->etapa     =  Input::get('etapa');
-                    $PipTotalPrioriEstado->sub_etapa =  Input::get('sub_etapa');
-                    $PipTotalPrioriEstado->est_situ  =  Input::get('situa_pro');
-                    $PipTotalPrioriEstado->obs       =  Input::get('obs');
+                    $PipTotalPrioriEstado->etapa     =  request()->get('etapa');
+                    $PipTotalPrioriEstado->sub_etapa =  request()->get('sub_etapa');
+                    $PipTotalPrioriEstado->est_situ  =  request()->get('situa_pro');
+                    $PipTotalPrioriEstado->obs       =  request()->get('obs');
                     $PipTotalPrioriEstado->save();
 
                 } else {
                     $PipTotalPrioriEstado = new PipTotalPrioriEstado();
 
-                    $PipTotalPrioriEstado->idproyecto=  Input::get('id');
-                    $PipTotalPrioriEstado->etapa     =  Input::get('etapa');
-                    $PipTotalPrioriEstado->sub_etapa =  Input::get('sub_etapa');
-                    $PipTotalPrioriEstado->est_situ  =  Input::get('situa_pro');
-                    $PipTotalPrioriEstado->fecha_act =  Input::get('f_etapsub' );
-                    $PipTotalPrioriEstado->obs       =  Input::get('obs');
+                    $PipTotalPrioriEstado->idproyecto=  request()->get('id');
+                    $PipTotalPrioriEstado->etapa     =  request()->get('etapa');
+                    $PipTotalPrioriEstado->sub_etapa =  request()->get('sub_etapa');
+                    $PipTotalPrioriEstado->est_situ  =  request()->get('situa_pro');
+                    $PipTotalPrioriEstado->fecha_act =  request()->get('f_etapsub' );
+                    $PipTotalPrioriEstado->obs       =  request()->get('obs');
                     $PipTotalPrioriEstado->save();
                 }
             }
 
 
-            $PipTotalPriori->fill(Input::except('etapa','sub_etapa','situa_pro','f_etapsub','obs'));
+            $PipTotalPriori->fill(request()->except('etapa','sub_etapa','situa_pro','f_etapsub','obs'));
             $PipTotalPriori->save();
 
             PipTotalPriori::updateMasterTB($PipTotalPriori->id);
@@ -686,7 +685,7 @@ class PipTotalPrioriController extends Controller {
 
      //DETALLE INVERSION
     public function DetalleInversion() {
-        $cod_unif = Input::get('cod_unif');
+        $cod_unif = request()->get('cod_unif');
 
         $InfFinanciera = InfFinanciera::where('cod_unif','=',$cod_unif)->get()->toArray();
         return Response([
@@ -697,7 +696,7 @@ class PipTotalPrioriController extends Controller {
     }
 
     /*public function getSearchOpt(){
-        $param = Input::get('param');
+        $param = request()->get('param');
         $allowed = ['ger_direc', 'tipo_pry' , 'ult_anio_ejec_pry', 'etapa'];
         if(in_array($param,$allowed)){
             $Snipp = PipTotalPriori::select($param)->distinct()->orderBy($param,'desc')->get()->toArray();
@@ -1219,7 +1218,7 @@ class PipTotalPrioriController extends Controller {
         /*
          * Vars
          */
-        $input = Input::all();
+        $input = request()->all();
 
         $PipTP = PipTotalPriori::where('cod_unif',$input['uid'])->first();
 

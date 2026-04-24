@@ -4,14 +4,13 @@ namespace sayhuite\Http\Controllers;
 
 use Illuminate\Http\Request;
 use sayhuite\Distrito;
-use Illuminate\Support\Facades\Request as Input;
 use DB;
 use sayhuite\Usuario;
 
 class UbigeoController extends Controller
 {
     public function listDistritoByName(){
-    	$input = Input::all();
+    	$input = request()->all();
 
     	$str = '%' . $input['q'] . '%';
 

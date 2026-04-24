@@ -9,7 +9,6 @@ use sayhuite\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Request as Input;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
@@ -98,10 +97,10 @@ class UsuarioController extends Controller {
 
     //insertar datos
     public function store() {
-        if(count(Input::get('unidades'))<=0){
+        if(count(request()->get('unidades'))<=0){
             return back()->with('mensaje_error', 'Seleccione al menos una gerencia o dirección')->withInput();
         }
-        $validator = Validator::make($data = Input::except('_token'), Usuario::$rulesRegistro);
+        $validator = Validator::make($data = request()->except('_token'), Usuario::$rulesRegistro);
 
         if ($validator->fails()) {
             $mensaje_error = '';
@@ -111,7 +110,7 @@ class UsuarioController extends Controller {
             }
             return back()->with('mensaje_error', $mensaje_error)->withInput();
         } else {
-            $data = Input::except('_token','roles','unidades');
+            $data = request()->except('_token','roles','unidades');
             if (strlen($data['password']) >= 6) {
                 $data['password'] = Hash::make($data['password']);
                 $usuario = new Usuario();
@@ -124,11 +123,11 @@ class UsuarioController extends Controller {
                 //$user = User::create($loginuserdata);
                 //$insertedId = $user->id;
 
-                foreach (Input::get('roles') as $key => $value) {
+                foreach (request()->get('roles') as $key => $value) {
                     //DB::table('role_user')->insert(['user_id'=>$usuario->id,'role_id'=>$value]);
                     $usuario->attachRole($value);
                 }
-                foreach (Input::get('unidades') as $key => $value) {
+                foreach (request()->get('unidades') as $key => $value) {
                     //DB::table('usuario_dependencia')->insert(['idusuario'=>$usuario->id,'iddependencia'=>$value]);
                     $usuario->unidad()->attach($value);
                 }
@@ -142,10 +141,10 @@ class UsuarioController extends Controller {
     }
 
     public function store_actividad() {
-        if(count(Input::get('unidades'))<=0){
+        if(count(request()->get('unidades'))<=0){
           return Response(['error'  => true,'msj' => 'Seleccione al menos una gerencia o dirección'],400);
         }
-        $validator = Validator::make($data = Input::except('_token'), Usuario::$rulesRegistro);
+        $validator = Validator::make($data = request()->except('_token'), Usuario::$rulesRegistro);
         if ($validator->fails()) {
             $mensaje_error = '';
             $mensajes = $validator->messages();
@@ -154,16 +153,16 @@ class UsuarioController extends Controller {
             }
             return Response(['error'  => true,'msj' => $mensaje_error],400);
         } else {
-            $data = Input::except('_token','roles','unidades');
+            $data = request()->except('_token','roles','unidades');
             if (strlen($data['password']) >= 6) {
                 $data['password'] = Hash::make($data['password']);
                 $usuario = new Usuario();
                 $usuario->fill($data);
                 $usuario->save();
-                foreach (Input::get('roles') as $key => $value) {
+                foreach (request()->get('roles') as $key => $value) {
                     $usuario->attachRole($value);
                 }
-                foreach (Input::get('unidades') as $key => $value) {
+                foreach (request()->get('unidades') as $key => $value) {
                     $usuario->unidad()->attach($value);
                 }
                 return Response(['error' => false,'dni' => $data['dni']],200);
@@ -220,12 +219,12 @@ class UsuarioController extends Controller {
 
     //actualizar datos
     public function update($id) {
-        //dd(count(Input::get('roles')));
-        if(count(Input::get('unidades'))<=0){
+        //dd(count(request()->get('roles')));
+        if(count(request()->get('unidades'))<=0){
             return back()->with('mensaje_error', 'Seleccione al menos una gerencia o Dirección')->withInput();
         }
         
-        $validator = Validator::make($data = Input::except('_token'), Usuario::$rules_update);
+        $validator = Validator::make($data = request()->except('_token'), Usuario::$rules_update);
 
         if ($validator->fails()) {
             $mensaje_error = '';
@@ -238,17 +237,17 @@ class UsuarioController extends Controller {
 
                 $user = Usuario::find($id);
                 //dd($data);
-                $data = Input::except('_token','roles','unidades','password');
-                $user->fill(Input::except('password'));
+                $data = request()->except('_token','roles','unidades','password');
+                $user->fill(request()->except('password'));
                 $user->save();
                 //Usuario::where('idusuario', $id)->update($data);
                 DB::table('role_user')->where('user_id',$id)->delete();
-                foreach (Input::get('roles') as $key => $value) {
+                foreach (request()->get('roles') as $key => $value) {
                     $user->attachRole($value);
                 }
 
                 DB::table('usuario_dependencia')->where('idusuario',$id)->delete();
-                foreach (Input::get('unidades') as $key => $val) {
+                foreach (request()->get('unidades') as $key => $val) {
                     $user->unidad()->attach($val);
                 }
 

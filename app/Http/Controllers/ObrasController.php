@@ -18,7 +18,6 @@ use DB;
 use Response;
 use Datetime;
 use sayhuite\Logic\Tools\Tools;
-use Illuminate\Support\Facades\Request as Input;
 use File;
 
 class ObrasController extends Controller
@@ -795,7 +794,7 @@ class ObrasController extends Controller
 
 
         //VALIDATOR>>>>>>>>>>>>
-        $file = Input::file('qqfile');
+        $file = request()->file('qqfile');
 
         $arr = ['file' => $file];
 
