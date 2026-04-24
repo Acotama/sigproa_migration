@@ -1,62 +1,64 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
     Route::group(['prefix' => '/piptotalpriori/ejecucion', 'middleware' => ['permission:pi-ejecucion-listar']], function () {
         Route::group(['prefix' => '/obra'], function () {
             Route::group(['prefix' => '/evidencia'], function () {
-                Route::get('/', ['uses' => 'ObrasController@evidenciaIndex']);
-                Route::post('/filter', ['uses' => 'ObrasController@evidenciaFilterData']);
-                Route::post('/create', ['uses' => 'ObrasController@evidenciaCreate']);
-                Route::post('/store', ['uses' => 'ObrasController@evidenciaStore']);
-                Route::post('/delete', ['uses' => 'ObrasController@evidenciaDelete']);
-                Route::post('/show', ['uses' => 'ObrasController@evidenciaShowObra']);
-                Route::post('/list', ['uses' => 'ObrasController@evidenciaList']);
-                Route::post('/list/filter', ['uses' => 'ObrasController@evidenciaListFilter']);
+                Route::get('/', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaIndex']);
+                Route::post('/filter', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaFilterData']);
+                Route::post('/create', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaCreate']);
+                Route::post('/store', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaStore']);
+                Route::post('/delete', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaDelete']);
+                Route::post('/show', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaShowObra']);
+                Route::post('/list', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaList']);
+                Route::post('/list/filter', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaListFilter']);
 
                 Route::group(['prefix' => '/img'], function () {
-                    Route::get('/get/{idobra}/{fecha}', ['uses' => 'ObrasController@evidenciaImageGet']);
-                    Route::post('/upload', ['uses' => 'ObrasController@evidenciaImageStore']);
-                    Route::post('/delete', ['uses' => 'ObrasController@evidenciaImageDelete']);
+                    Route::get('/get/{idobra}/{fecha}', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaImageGet']);
+                    Route::post('/upload', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaImageStore']);
+                    Route::post('/delete', [\sayhuite\Http\Controllers\ObrasController::class, 'evidenciaImageDelete']);
                 });
             });
 
-            Route::post('/filter', ['uses' =>  'ObrasController@filterData']);
+            Route::post('/filter', [\sayhuite\Http\Controllers\ObrasController::class, 'filterData']);
 
-            Route::post('/filter/ejecucion', ['uses' =>  'ObrasController@filterDataEjecucion']);
+            Route::post('/filter/ejecucion', [\sayhuite\Http\Controllers\ObrasController::class, 'filterDataEjecucion']);
 
-            Route::post('/create', ['uses' =>  'ObrasController@create']);
-            Route::post('/store', ['uses' =>  'ObrasController@store']);
-            Route::post('/edit', ['uses' =>  'ObrasController@edit']);
-            Route::post('/show', ['uses' =>  'ObrasController@show']);
-            Route::post('/update', ['uses' =>  'ObrasController@update']);
+            Route::post('/create', [\sayhuite\Http\Controllers\ObrasController::class, 'create']);
+            Route::post('/store', [\sayhuite\Http\Controllers\ObrasController::class, 'store']);
+            Route::post('/edit', [\sayhuite\Http\Controllers\ObrasController::class, 'edit']);
+            Route::post('/show', [\sayhuite\Http\Controllers\ObrasController::class, 'show']);
+            Route::post('/update', [\sayhuite\Http\Controllers\ObrasController::class, 'update']);
 
-            Route::post('/delete', ['uses' =>  'ObrasController@delete']);
+            Route::post('/delete', [\sayhuite\Http\Controllers\ObrasController::class, 'delete']);
 
             Route::group(['prefix' => '/inspector'], function () {
-                Route::post('/asignar', ['uses' =>  'ObrasController@asignarResponsable']);
-                Route::post('/vincular', ['uses' =>  'ObrasController@vincularInspector']);
-                Route::post('/desvincular', ['uses' =>  'ObrasController@desvincularInspector']);
+                Route::post('/asignar', [\sayhuite\Http\Controllers\ObrasController::class, 'asignarResponsable']);
+                Route::post('/vincular', [\sayhuite\Http\Controllers\ObrasController::class, 'vincularInspector']);
+                Route::post('/desvincular', [\sayhuite\Http\Controllers\ObrasController::class, 'desvincularInspector']);
             });
         });
 
         Route::group(['prefix' => '/estado'], function () {
-            Route::get('/', ['uses' =>  'ObrasEstadoController@index']);
+            Route::get('/', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'index']);
 
-            Route::post('/filter', ['uses' =>  'ObrasEstadoController@filterData']);
+            Route::post('/filter', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'filterData']);
 
-            Route::post('/add', ['uses' =>  'ObrasEstadoController@add']);
+            Route::post('/add', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'add']);
 
-            Route::post('/create', ['uses' =>  'ObrasEstadoController@create']);
+            Route::post('/create', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'create']);
 
-            Route::post('/delete', ['uses' =>  'ObrasEstadoController@delete']);
+            Route::post('/delete', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'delete']);
 
-            Route::post('/edit', ['uses' =>  'ObrasEstadoController@edit']);
-            Route::post('/update', ['uses' =>  'ObrasEstadoController@update']);
+            Route::post('/edit', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'edit']);
+            Route::post('/update', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'update']);
 
-            Route::post('/list', ['uses' =>  'ObrasEstadoController@listEstados']);
+            Route::post('/list', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'listEstados']);
 
-            Route::post('/img/upload', ['uses' =>  'ObrasEstadoController@imgUpload']);
-            Route::get('/img/get/{id}', ['uses' =>  'ObrasEstadoController@imgGet']);
-            Route::post('/img/delete', ['uses' =>  'ObrasEstadoController@imgDelete']);
+            Route::post('/img/upload', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'imgUpload']);
+            Route::get('/img/get/{id}', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'imgGet']);
+            Route::post('/img/delete', [\sayhuite\Http\Controllers\ObrasEstadoController::class, 'imgDelete']);
         });
     });
 

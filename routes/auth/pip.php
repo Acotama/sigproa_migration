@@ -1,72 +1,75 @@
 <?php
 
     //PIP TOTAL PRIORI
-    Route::get('piptotalpriori', ['uses' => 'PipTotalPrioriController@index', 'middleware' => ['permission:pi-list']]);
-    //Route::get('piptotalpriori/create',['uses' =>  'PipTotalPrioriController@create','middleware' => ['permission:pi-create']]);
-    //Route::post('piptotalpriori/store',['uses' =>  'PipTotalPrioriController@store','middleware' => ['permission:pi-store']]);
-    Route::post('piptotalpriori/show', ['uses' =>  'PipTotalPrioriController@show', 'middleware' => ['permission:pi-show']]);
-    Route::get('piptotalpriori/edit/{id}', ['uses' =>  'PipTotalPrioriController@edit', 'middleware' => ['permission:pi-edit']]);
+
+use Illuminate\Support\Facades\Route;
+
+    Route::get('piptotalpriori', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'index'])->middleware(['permission:pi-list']);
+    //Route::get('piptotalpriori/create',['uses' =>  [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'create'],'middleware' => ['permission:pi-create']]);
+    //Route::post('piptotalpriori/store',['uses' =>  [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'store'],'middleware' => ['permission:pi-store']]);
+    Route::post('piptotalpriori/show', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'show'])->middleware(['permission:pi-show']);
+    Route::get('piptotalpriori/edit/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'edit'])->middleware(['permission:pi-edit']);
     //>>>>
-    Route::post('piptotalpriori/codexists', ['uses' => 'PipTotalPrioriController@codExists', 'middleware' => ['permission:pi-list']]);
-    Route::post('piptotalpriori/update/{id}', ['uses' =>  'PipTotalPrioriController@update', 'middleware' => ['permission:pi-update']]);
-    Route::get('piptotalpriori/destroy/{id}', ['uses' =>  'PipTotalPrioriController@destroy', 'middleware' => ['permission:pi-delete']]);
-    Route::get('piptotalpriori/combodistrito/{id}', ['uses' =>  'PipTotalPrioriController@combodistrito']);
-    Route::get('piptotalpriori/combosubetapa/{id}', ['uses' =>  'PipTotalPrioriController@combosubetapa']);
-    Route::get('piptotalpriori/buscacontrato', ['uses' =>  'PipTotalPrioriController@buscacontrato']);
+    Route::post('piptotalpriori/codexists', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'codExists'])->middleware(['permission:pi-list']);
+    Route::post('piptotalpriori/update/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'update'])->middleware(['permission:pi-update']);
+    Route::get('piptotalpriori/destroy/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'destroy'])->middleware(['permission:pi-delete']);
+    Route::get('piptotalpriori/combodistrito/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'combodistrito']);
+    Route::get('piptotalpriori/combosubetapa/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'combosubetapa']);
+    Route::get('piptotalpriori/buscacontrato', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'buscacontrato']);
     //>>>>Detail
-    Route::post('/pipInv', ['uses' =>  'PipTotalPrioriController@DetalleInversion', 'middleware' => ['permission:pi-list']]);
+    Route::post('/pipInv', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'DetalleInversion'])->middleware(['permission:pi-list']);
     //>>>>Search
-    Route::post('/getSearchOpt', ['uses' =>  'PipTotalPrioriController@getSearchOpt', 'middleware' => ['permission:pi-list']]);
+    Route::post('/getSearchOpt', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'getSearchOpt'])->middleware(['permission:pi-list']);
     //>>>>Count
-    Route::post('/getCount', ['uses' =>  'PipTotalPrioriController@getCount', 'middleware' => ['permission:pi-list']]);
+    Route::post('/getCount', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'getCount'])->middleware(['permission:pi-list']);
     //>>>>State
-    Route::post('/stateSayhuite', ['uses' =>  'PipTotalPrioriController@stateSayhuite', 'middleware' => ['permission:sayhuite-state']]);
+    Route::post('/stateSayhuite', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'stateSayhuite'])->middleware(['permission:sayhuite-state']);
     //>>>>Filter
-    Route::post('/filter-data', ['uses' =>  'PipTotalPrioriController@filterData', 'middleware' => ['permission:pi-list']]);
+    Route::post('/filter-data', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'filterData'])->middleware(['permission:pi-list']);
     //>>>>Select Pi
-    Route::post('piptotalpriori/selectpi', ['uses' =>  'PipTotalPrioriController@selectPi']);
-    Route::post('piptotalpriori/selectpi-update', ['uses' =>  'PipTotalPrioriController@selectPiUpdate', 'middleware' => ['permission:pi-list']]);
+    Route::post('piptotalpriori/selectpi', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'selectPi']);
+    Route::post('piptotalpriori/selectpi-update', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'selectPiUpdate'])->middleware(['permission:pi-list']);
     //>>>>PdfExport
-    Route::get('piptotalpriori/pdfExport/{id}', ['uses' =>  'PipTotalPrioriController@pdfExport', 'middleware' => ['permission:pi-list']]);
+    Route::get('piptotalpriori/pdfExport/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'pdfExport'])->middleware(['permission:pi-list']);
     //>>>>WordExport
-    Route::get('piptotalpriori/wordExport/{id}', ['uses' =>  'PipTotalPrioriController@wordExport', 'middleware' => ['permission:pi-list']]);
+    Route::get('piptotalpriori/wordExport/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'wordExport'])->middleware(['permission:pi-list']);
 
-    Route::get('piptotalpriori/pdfExportHistory/{id}', ['uses' =>  'PipTotalPrioriController@exportHistory', 'middleware' => ['permission:pi-list']]);
+    Route::get('piptotalpriori/pdfExportHistory/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'exportHistory'])->middleware(['permission:pi-list']);
     //>>>>History
-    Route::get('piptotalpriori/history/{id}', ['uses' =>  'PipTotalPrioriController@history', 'middleware' => ['permission:pi-list']]);
+    Route::get('piptotalpriori/history/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'history'])->middleware(['permission:pi-list']);
     //>>>>History Finance
-    Route::get('piptotalpriori/historyf/{id}', ['uses' =>  'PipTotalPrioriController@historyFinance', 'middleware' => ['permission:pi-list']]);
+    Route::get('piptotalpriori/historyf/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'historyFinance'])->middleware(['permission:pi-list']);
     //IMAGES
-    Route::any('/imgUpload', ['as' => 'upload-post', 'uses' => 'PipTotalPrioriController@imgUpload', 'middleware' => ['permission:image-upload']]);
-    Route::get('/getServer-images/{uid}', ['as' => 'server-images', 'uses' => 'PipTotalPrioriController@getServerImages', 'middleware' => ['permission:image-list']]);
+    Route::any('/imgUpload', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'imgUpload'])->middleware(['permission:image-upload'])->name('upload-post');
+    Route::get('/getServer-images/{uid}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'getServerImages'])->middleware(['permission:image-list'])->name('server-images');
 
-    Route::get('/getServer-images2/{uid}', ['as' => 'server-images', 'uses' => 'PipTotalPrioriController@getServerImages2', 'middleware' => ['permission:image-list']]);
-    Route::get('/piptotalpriori/getEditImage/{uid}', ['as' => 'edit-server-images', 'uses' => 'PipTotalPrioriController@getEditServerImages', 'middleware' => ['permission:pi-edit']]);
-    Route::post('/piptotalpriori/updateImage/{uid}', ['as' => 'update-server-images', 'uses' => 'PipTotalPrioriController@updateImage', 'middleware' => ['permission:pi-edit']]);
-    Route::get('/piptotalpriori/getPackImage/{uid}', ['as' => 'server-images-pack', 'uses' => 'PipTotalPrioriController@getImagePack']);
+    Route::get('/getServer-images2/{uid}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'getServerImages2'])->middleware(['permission:image-list'])->name('server-images');
+    Route::get('/piptotalpriori/getEditImage/{uid}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'getEditServerImages'])->middleware(['permission:pi-edit'])->name('edit-server-images');
+    Route::post('/piptotalpriori/updateImage/{uid}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'updateImage'])->middleware(['permission:pi-edit'])->name('update-server-images');
+    Route::get('/piptotalpriori/getPackImage/{uid}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'getImagePack'])->name('server-images-pack');
 
-    Route::POST('/piptotalpriori/deleteImagePack/{id}', ['as' => 'server-images-pack', 'uses' => 'PipTotalPrioriController@deleteImagePack', 'middleware' => ['permission:pi-edit']]);
+    Route::POST('/piptotalpriori/deleteImagePack/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'deleteImagePack'])->middleware(['permission:pi-edit'])->name('server-images-pack');
 
-    Route::GET('/piptotalpriori/getMetas/{id}', ['as' => 'get-metas', 'uses' => 'PipTotalPrioriController@getMetas']);
+    Route::GET('/piptotalpriori/getMetas/{id}', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'getMetas'])->name('get-metas');
 
     //PDF
-    Route::any('/pdfUpload', ['as' => 'upload-pdf', 'uses' => 'PipTotalPrioriController@uploadPdf', 'middleware' => ['permission:pdf-upload']]);
+    Route::any('/pdfUpload', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'uploadPdf'])->middleware(['permission:pdf-upload'])->name('upload-pdf');
     //LOCATION
-    Route::post('/getLocationInfo', ['uses' =>  'PipTotalPrioriController@getLocationInfo']);
-    Route::post('/updateLocationInfo', ['uses' =>  'PipTotalPrioriController@updateLocationInfo']);
+    Route::post('/getLocationInfo', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'getLocationInfo']);
+    Route::post('/updateLocationInfo', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'updateLocationInfo']);
     //TOTAL PRIORI ACTUALIZAR
-    Route::post('/update_datos_TotalPriori', ['uses' =>  'PipTotalPrioriController@update_datos_TotalPriori', 'middleware' => ['permission:pi-update']]);
+    Route::post('/update_datos_TotalPriori', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'update_datos_TotalPriori'])->middleware(['permission:pi-update']);
 
 
-    Route::get('/piptotalpriori/proyecto/estado/filter', ['uses' => 'PipTotalPrioriController@filterEstadoProyecto']);
-    Route::post('/piptotalpriori/proyecto/estado/delete', ['uses' => 'PipTotalPrioriController@deleteEstadoProyecto']);
+    Route::get('/piptotalpriori/proyecto/estado/filter', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'filterEstadoProyecto']);
+    Route::post('/piptotalpriori/proyecto/estado/delete', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'deleteEstadoProyecto']);
 
 
 
     //CRONOGRAMA
 
-    Route::get('/piptotalpriori/cronograma/{idproyecto}', ['uses' =>  'CronogramaController@index']);
-    Route::get('/piptotalpriori/cronograma/{idproyecto}/meta/{idmeta}', ['uses' =>  'CronogramaController@get']);
+    Route::get('/piptotalpriori/cronograma/{idproyecto}', [\sayhuite\Http\Controllers\CronogramaController::class, 'index']);
+    Route::get('/piptotalpriori/cronograma/{idproyecto}/meta/{idmeta}', [\sayhuite\Http\Controllers\CronogramaController::class, 'get']);
     Route::resource('/piptotalpriori/cronograma/{idproyecto}/meta/{idmeta}/link', 'LinkController');
     Route::resource('/piptotalpriori/cronograma/{idproyecto}/meta/{idmeta}/task', 'TaskController');
 

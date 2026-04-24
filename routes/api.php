@@ -13,4 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', 'Api\UserController@me');
+Route::middleware('auth:api')->get('/user', [\sayhuite\Http\Controllers\Api\UserController::class, 'me']);

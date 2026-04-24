@@ -18,9 +18,9 @@ use Illuminate\Support\Facades\Route;
     return view('test.test');
 });*/
 
-Route::get('/', 'HomeController@index');
+Route::get('/', [\sayhuite\Http\Controllers\HomeController::class, 'index']);
 
-//Route::get('/console', 'PipTotalPrioriController@console');
+//Route::get('/console', [\sayhuite\Http\Controllers\PipTotalPrioriController::class, 'console']);
 
 /*Route::get('/pusher', function(){
     event(new sayhuite\Events\HelloPusherEvent('Hi there Pusher!'));
@@ -32,56 +32,56 @@ Route::view('/testing', 'test.test');
 
 
 
-//Route::get('/service', 'HomeController@service');
+//Route::get('/service', [\sayhuite\Http\Controllers\HomeController::class, 'service']);
 
-Route::get('login', 'HomeController@login');
-Route::post('login', 'HomeController@postLogin');
+Route::get('login', [\sayhuite\Http\Controllers\HomeController::class, 'login']);
+Route::post('login', [\sayhuite\Http\Controllers\HomeController::class, 'postLogin']);
 
 //REGISTRO
-Route::get('registro', 'HomeController@registro');
-Route::post('registro', 'HomeController@registroCreate');
+Route::get('registro', [\sayhuite\Http\Controllers\HomeController::class, 'registro']);
+Route::post('registro', [\sayhuite\Http\Controllers\HomeController::class, 'registroCreate']);
 
 //PASSWORD
-Route::get('email', 'HomeController@email');
-Route::post('email', 'HomeController@emailEnviar');
+Route::get('email', [\sayhuite\Http\Controllers\HomeController::class, 'email']);
+Route::post('email', [\sayhuite\Http\Controllers\HomeController::class, 'emailEnviar']);
 
 //CONTACTO
-Route::get('mensaje', 'HomeController@contacto');
-Route::post('mensaje', 'HomeController@contactoCreate');
+Route::get('mensaje', [\sayhuite\Http\Controllers\HomeController::class, 'contacto']);
+Route::post('mensaje', [\sayhuite\Http\Controllers\HomeController::class, 'contactoCreate']);
 
-Route::get('combo/{id1}/{id2}', 'HomeController@combo')->where(array('id1' => '[0-9]+', 'id2' => '[0-9]+'));
-Route::get('acerca', 'HomeController@acerca');
+Route::get('combo/{id1}/{id2}', [\sayhuite\Http\Controllers\HomeController::class, 'combo'])->where(array('id1' => '[0-9]+', 'id2' => '[0-9]+'));
+Route::get('acerca', [\sayhuite\Http\Controllers\HomeController::class, 'acerca']);
 
 
-Route::any('etInfo', 'HomeController@insertInfo');
+Route::any('etInfo', [\sayhuite\Http\Controllers\HomeController::class, 'insertInfo']);
 
 Route::group(['prefix' => '/resumen'], function () {
-    Route::get('/', 'HomeController@resumen');
-    Route::post('ejecucionmeta', 'ProyectoController@ejecucionmeta');
-    Route::post('financiera', 'StatsController@lineFinanciera');
-    Route::post('ranking', 'StatsController@ranking');
-    Route::get('historia_anio', 'ProyectoController@historia_anio');
-    Route::post('/showprydev', 'ProyectoController@showprydev');
+    Route::get('/', [\sayhuite\Http\Controllers\HomeController::class, 'resumen']);
+    Route::post('ejecucionmeta', [\sayhuite\Http\Controllers\ProyectoController::class, 'ejecucionmeta']);
+    Route::post('financiera', [\sayhuite\Http\Controllers\StatsController::class, 'lineFinanciera']);
+    Route::post('ranking', [\sayhuite\Http\Controllers\StatsController::class, 'ranking']);
+    Route::get('historia_anio', [\sayhuite\Http\Controllers\ProyectoController::class, 'historia_anio']);
+    Route::post('/showprydev', [\sayhuite\Http\Controllers\ProyectoController::class, 'showprydev']);
 });
 
 Route::group(['prefix' => '/resumen1'], function () {
-    Route::get('/', 'HomeController@resumen1');
-    Route::post('ejecucionmeta', 'ProyectoController@ejecucionmeta');
-    Route::post('financiera', 'StatsController@lineFinanciera');
-    Route::post('ranking', 'StatsController@ranking');
-    Route::get('historia_anio', 'ProyectoController@historia_anio');
-    Route::post('/showprydev', 'ProyectoController@showprydev');
+    Route::get('/', [\sayhuite\Http\Controllers\HomeController::class, 'resumen1']);
+    Route::post('ejecucionmeta', [\sayhuite\Http\Controllers\ProyectoController::class, 'ejecucionmeta']);
+    Route::post('financiera', [\sayhuite\Http\Controllers\StatsController::class, 'lineFinanciera']);
+    Route::post('ranking', [\sayhuite\Http\Controllers\StatsController::class, 'ranking']);
+    Route::get('historia_anio', [\sayhuite\Http\Controllers\ProyectoController::class, 'historia_anio']);
+    Route::post('/showprydev', [\sayhuite\Http\Controllers\ProyectoController::class, 'showprydev']);
 });
 
 Route::group(['prefix' => '/apigore'], function () {
-    Route::get('/lista_inversion', 'ApiController@lista_inversion');
-    Route::get('/lista', 'ApiController@lista');
-    Route::get('/lista_total', 'ApiController@lista_total');
+    Route::get('/lista_inversion', [\sayhuite\Http\Controllers\ApiController::class, 'lista_inversion']);
+    Route::get('/lista', [\sayhuite\Http\Controllers\ApiController::class, 'lista']);
+    Route::get('/lista_total', [\sayhuite\Http\Controllers\ApiController::class, 'lista_total']);
 });
 
 Route::group(['prefix' => '/apimef'], function () {
-    Route::get('/ssi/{id}', 'ApiMefController@ssi');
-    Route::get('/f12b/{id}', 'ApiMefController@f12b');
-    Route::get('/pmi/{id}', 'ApiMefController@pmi');
-    Route::get('/formato08/{id}', 'ApiMefController@formato08');
+    Route::get('/ssi/{id}', [\sayhuite\Http\Controllers\ApiMefController::class, 'ssi']);
+    Route::get('/f12b/{id}', [\sayhuite\Http\Controllers\ApiMefController::class, 'f12b']);
+    Route::get('/pmi/{id}', [\sayhuite\Http\Controllers\ApiMefController::class, 'pmi']);
+    Route::get('/formato08/{id}', [\sayhuite\Http\Controllers\ApiMefController::class, 'formato08']);
 });

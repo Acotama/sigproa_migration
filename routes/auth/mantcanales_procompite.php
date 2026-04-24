@@ -1,49 +1,52 @@
 <?php
 
     //MANTENIMIENTO DE CANALES - mantcanales
-    Route::get('/mantcanales', ['uses' => 'MantCanalesController@index', 'middleware' => ['permission:mantcanales-list']]);
-    Route::get('/mantcanales/create', ['uses' =>  'MantCanalesController@create', 'middleware' => ['permission:mantcanales-update']]);
-    Route::post('/mantcanales/store', ['uses' =>  'MantCanalesController@store', 'middleware' => ['permission:mantcanales-update']]);
-    Route::post('/mantcanales/show', ['uses' =>  'MantCanalesController@show', 'middleware' => ['permission:mantcanales-show']]);
-    Route::post('/mantcanales/update', ['uses' =>  'MantCanalesController@update', 'middleware' => ['permission:mantcanales-update']]);
+
+use Illuminate\Support\Facades\Route;
+
+    Route::get('/mantcanales', [\sayhuite\Http\Controllers\MantCanalesController::class, 'index'])->middleware(['permission:mantcanales-list']);
+    Route::get('/mantcanales/create', [\sayhuite\Http\Controllers\MantCanalesController::class, 'create'])->middleware(['permission:mantcanales-update']);
+    Route::post('/mantcanales/store', [\sayhuite\Http\Controllers\MantCanalesController::class, 'store'])->middleware(['permission:mantcanales-update']);
+    Route::post('/mantcanales/show', [\sayhuite\Http\Controllers\MantCanalesController::class, 'show'])->middleware(['permission:mantcanales-show']);
+    Route::post('/mantcanales/update', [\sayhuite\Http\Controllers\MantCanalesController::class, 'update'])->middleware(['permission:mantcanales-update']);
     //>>>>State
-    Route::post('/stateSayhuiteMantCanales', ['uses' =>  'MantCanalesController@stateSayhuite', 'middleware' => ['permission:mancanales-list']]);
+    Route::post('/stateSayhuiteMantCanales', [\sayhuite\Http\Controllers\MantCanalesController::class, 'stateSayhuite'])->middleware(['permission:mancanales-list']);
     //>>>>Filter
-    Route::post('/filter-data-mantcanales', ['as' => 'fd-mantcanales', 'uses' =>  'MantCanalesController@filterData', 'middleware' => ['permission:mantcanales-list']]);
+    Route::post('/filter-data-mantcanales', [\sayhuite\Http\Controllers\MantCanalesController::class, 'filterData'])->middleware(['permission:mantcanales-list'])->name('fd-mantcanales');
     //>>>>LOCATION
-    Route::post('/mantcanales/location', ['uses' =>  'MantCanalesController@getLocationPage']);
-    Route::post('/mantcanales-getLocationInfo', ['uses' =>  'MantCanalesController@getLocationInfo']);
-    Route::post('/mantcanales-updateLocationInfo', ['uses' =>  'MantCanalesController@updateLocationInfo']);
+    Route::post('/mantcanales/location', [\sayhuite\Http\Controllers\MantCanalesController::class, 'getLocationPage']);
+    Route::post('/mantcanales-getLocationInfo', [\sayhuite\Http\Controllers\MantCanalesController::class, 'getLocationInfo']);
+    Route::post('/mantcanales-updateLocationInfo', [\sayhuite\Http\Controllers\MantCanalesController::class, 'updateLocationInfo']);
     //PDF
-    Route::post('/mantcanales/pdf', ['uses' => 'MantCanalesController@getPagePdfUpload']);
-    Route::any('/mantcanales/fileUpload', ['as' => 'mantcanales-upload-pdf', 'uses' => 'MantCanalesController@postUploadPdf']);
-    Route::get('/mantcanales-server-pdf/{uid}', ['as' => 'mantcanales-server-pdf', 'uses' => 'MantCanalesController@getServerPdf']);
-    Route::any('/mantcanales-delete-pdf', ['as' => 'delete-pdf', 'uses' => 'MantCanalesController@deletePdf']);
+    Route::post('/mantcanales/pdf', [\sayhuite\Http\Controllers\MantCanalesController::class, 'getPagePdfUpload']);
+    Route::any('/mantcanales/fileUpload', [\sayhuite\Http\Controllers\MantCanalesController::class, 'postUploadPdf'])->name('mantcanales-upload-pdf');
+    Route::get('/mantcanales-server-pdf/{uid}', [\sayhuite\Http\Controllers\MantCanalesController::class, 'getServerPdf'])->name('mantcanales-server-pdf');
+    Route::any('/mantcanales-delete-pdf', [\sayhuite\Http\Controllers\MantCanalesController::class, 'deletePdf'])->name('delete-pdf');
     //IMAGES
-    Route::post('/mantcanales/images', ['uses' => 'MantCanalesController@getPageImageUpload']);
-    Route::any('/mantcanales/images/upload', ['as' => 'upload-post', 'uses' => 'MantCanalesController@imgUpload']);
-    Route::get('/mantcanales/server-images/{uid}', ['as' => 'server-images', 'uses' => 'MantCanalesController@getServerImages']);
+    Route::post('/mantcanales/images', [\sayhuite\Http\Controllers\MantCanalesController::class, 'getPageImageUpload']);
+    Route::any('/mantcanales/images/upload', [\sayhuite\Http\Controllers\MantCanalesController::class, 'imgUpload'])->name('upload-post');
+    Route::get('/mantcanales/server-images/{uid}', [\sayhuite\Http\Controllers\MantCanalesController::class, 'getServerImages'])->name('server-images');
 
 
     //PROCOMPITE -procompite
-    Route::get('procompite', ['uses' => 'ProcompiteController@index']);
-    Route::post('procompite/show', ['uses' =>  'ProcompiteController@show']);
-    Route::post('procompite/update', ['uses' =>  'ProcompiteController@update']);
+    Route::get('procompite', [\sayhuite\Http\Controllers\ProcompiteController::class, 'index']);
+    Route::post('procompite/show', [\sayhuite\Http\Controllers\ProcompiteController::class, 'show']);
+    Route::post('procompite/update', [\sayhuite\Http\Controllers\ProcompiteController::class, 'update']);
     //>>>>State
-    Route::post('/stateSayhuiteProcompite', ['uses' =>  'ProcompiteController@stateSayhuite']);
+    Route::post('/stateSayhuiteProcompite', [\sayhuite\Http\Controllers\ProcompiteController::class, 'stateSayhuite']);
     //>>>>Filter
-    Route::post('/filter-data-procompite', ['as' => 'fd-procompite', 'uses' =>  'ProcompiteController@filterData']);
+    Route::post('/filter-data-procompite', [\sayhuite\Http\Controllers\ProcompiteController::class, 'filterData'])->name('fd-procompite');
     //>>>>LOCATION
-    Route::post('/procompite/location', ['uses' =>  'ProcompiteController@getLocationPage']);
-    Route::post('/procompite-getLocationInfo', ['uses' =>  'ProcompiteController@getLocationInfo']);
-    Route::post('/procompite-updateLocationInfo', ['uses' =>  'ProcompiteController@updateLocationInfo']);
+    Route::post('/procompite/location', [\sayhuite\Http\Controllers\ProcompiteController::class, 'getLocationPage']);
+    Route::post('/procompite-getLocationInfo', [\sayhuite\Http\Controllers\ProcompiteController::class, 'getLocationInfo']);
+    Route::post('/procompite-updateLocationInfo', [\sayhuite\Http\Controllers\ProcompiteController::class, 'updateLocationInfo']);
     //PDF
-    Route::post('procompite/pdf', ['uses' => 'ProcompiteController@getPagePdfUpload']);
-    Route::any('procompite/fileUpload', ['as' => 'procompite-upload-pdf', 'uses' => 'ProcompiteController@postUploadPdf']);
-    Route::get('procompite-server-pdf/{uid}', ['as' => 'procompite-server-pdf', 'uses' => 'ProcompiteController@getServerPdf']);
-    Route::any('procompite-delete-pdf', ['as' => 'delete-pdf', 'uses' => 'ProcompiteController@deletePdf']);
+    Route::post('procompite/pdf', [\sayhuite\Http\Controllers\ProcompiteController::class, 'getPagePdfUpload']);
+    Route::any('procompite/fileUpload', [\sayhuite\Http\Controllers\ProcompiteController::class, 'postUploadPdf'])->name('procompite-upload-pdf');
+    Route::get('procompite-server-pdf/{uid}', [\sayhuite\Http\Controllers\ProcompiteController::class, 'getServerPdf'])->name('procompite-server-pdf');
+    Route::any('procompite-delete-pdf', [\sayhuite\Http\Controllers\ProcompiteController::class, 'deletePdf'])->name('delete-pdf');
     //IMAGES
-    Route::post('procompite/images', ['uses' => 'ProcompiteController@getPageImageUpload']);
-    Route::any('procompite/images/upload', ['as' => 'upload-post', 'uses' => 'ProcompiteController@imgUpload']);
-    Route::get('procompite/server-images/{uid}', ['as' => 'server-images', 'uses' => 'ProcompiteController@getServerImages']);
+    Route::post('procompite/images', [\sayhuite\Http\Controllers\ProcompiteController::class, 'getPageImageUpload']);
+    Route::any('procompite/images/upload', [\sayhuite\Http\Controllers\ProcompiteController::class, 'imgUpload'])->name('upload-post');
+    Route::get('procompite/server-images/{uid}', [\sayhuite\Http\Controllers\ProcompiteController::class, 'getServerImages'])->name('server-images');
 
