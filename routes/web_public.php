@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index');
 
-//Route::get('/hashimg', 'TService@hashimg');
-
 //Route::get('/console', 'PipTotalPrioriController@console');
 
 /*Route::get('/pusher', function(){
