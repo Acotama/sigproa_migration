@@ -53,8 +53,8 @@ class Kernel extends HttpKernel
         'guest' => \sayhuite\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         // FUERA DE LARAVEL
-        'role' => \Laratrust\Middleware\LaratrustRole::class,
-        'permission' => \Laratrust\Middleware\LaratrustPermission::class,
-        'ability' => \Laratrust\Middleware\LaratrustAbility::class,
+        'role' => \Laratrust\Middleware\Role::class,
+        'permission' => \Laratrust\Middleware\Permission::class,
+        'ability' => \Laratrust\Middleware\Ability::class,
     ];
 }
