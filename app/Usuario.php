@@ -4,13 +4,13 @@ namespace sayhuite;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laratrust\Traits\LaratrustUserTrait;
+use Laratrust\Traits\HasRolesAndPermissions;
 
 class Usuario extends Authenticatable
 {
 
     //use Notifiable;
-    use LaratrustUserTrait;
+    use HasRolesAndPermissions;
 
 
     protected $dontKeepAuditOf = ['_token'];
