@@ -4,9 +4,10 @@ namespace sayhuite;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
 
-class Usuario extends Authenticatable
+class Usuario extends Authenticatable implements LaratrustUser
 {
 
     //use Notifiable;
@@ -117,11 +118,6 @@ class Usuario extends Authenticatable
     public function rol()
     {
         return $this->belongsTo(Rol::class, 'idrol');
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
     public function dependencia()

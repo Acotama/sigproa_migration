@@ -2,8 +2,7 @@
 
 namespace sayhuite;
 
-use Illuminate\Database\Eloquent\Model;
-use Laratrust\Models\LaratrustRole;
+use Laratrust\Models\Role as LaratrustRole;
 
 class Role extends LaratrustRole
 {

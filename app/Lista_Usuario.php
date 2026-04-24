@@ -4,9 +4,10 @@ namespace sayhuite;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laratrust\Contracts\LaratrustUser;
 use Laratrust\Traits\HasRolesAndPermissions;
 
-class Lista_Usuario extends Authenticatable {
+class Lista_Usuario extends Authenticatable implements LaratrustUser {
 
     //use Notifiable;
     use HasRolesAndPermissions;
